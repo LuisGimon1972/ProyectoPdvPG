@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<!--  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://localhost:3000;">-->
+
+  <meta charset="UTF-8">
+  <title>Oriente System</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body onload="verificarLogin()">
+  <header>
+   <div style="position: relative; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px;">
+      <!-- Espaço esquerdo vazio para equilibrar -->      
+        <!-- Título centralizado -->
+         <div style="display: flex; align-items: center; gap: 8px;">
+           <label style="color: black;" id="nomeemitente">Emitente:</label>          
+       </div>        
+        <h3 style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0;">
+        🌐 Sistema de Gestão Comercial Oriente      </h3>
+        <!-- Campo do usuário à direita -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <label style="color: white;" for="nomeusuarios">Usuário Logado:</label>
+          <input type="text" id="nomeusuario" style="text-transform: uppercase; width: 150px;" />
+        </div>
+      </div>
+    </div>  
+  </header>
+
+  <div class="layout">    
+    <!-- Painel Esquerdo -->
+    <div class="painel-esquerdo">
+            <h1 style="font-family: Arial, sans-serif; font-size: 20px; text-align: center; background-color: #f1ab13; color: white; border-radius: 8px;">
+         Painel de Opções
+      </h1><br>
+      
+      <div class="botoes">
+        <h4 class="titulo-cadastro">Cadastros</h4>
+
+        <input style="width: 100%; margin-top: 1px;"  type="button"  value="📝 Cadastro de Emitente"  onclick="emitente()" class="botao-blue"><br>
+        <button style="width: 100%;margin-top: 1px" id="btn-carregar" class="botao-blue">👤 Cadastro de Usuários</button><br>
+        <input style="width: 100%;margin-top: 1px" type="button" value="📝 Cadastro de Funcionários" onclick="cadastrofuncionarios()" class="botao-blue"><br>
+        <button style="width: 100%;margin-top: 1px" id="btn-clientes" class="botao-blue">📝 Cadastro de Clientes</button>                
+        <input style="width: 100%;margin-top: 1px" type="button" value="📝 Cadastro de Fornecedores" onclick="cadastrofornecedores()" class="botao-blue"><br>
+        <input style="width: 100%;margin-top: 1px;margin-bottom: 10px ; top: 10px" type="button" value="📝 Cadastro de Produtos" onclick="cadastroprodutos()" class="botao-blue"><br>
+    
+        <h4 class="titulo-cadastro">Lista / Atualização</h4>        
+        <input style="width: 100%;margin-top: 1px" type="button" id="btnListarf"  value="📋 Lista de Funcionários" onclick="listafuncionario()" class="botao-blue"> <br>       
+        <button style="width: 100%;margin-top: 1px" id="btnListar" class="botao-blue">📋 Lista de Clientes</button><br>                        
+        <input style="width: 100%;margin-top: 1px " type="button" id="btnListarfo"  value="📋 Lista de Fornecedores" onclick="listafornecedor()" class="botao-blue"> <br>       
+        <input style="width: 100%;margin-top: 1px; margin-bottom: 10px " type="button" id="btnListarp"  value="📋 Lista de Produtos" onclick="listaproduto()" class="botao-blue"> <br>                            
+        
+        <h4 class="titulo-cadastro">Faturamento</h4>
+        <input style="width: 100%;margin-top: 1px" type="button" value="🧾 Nota de Compra" onclick="compra()" class="botao-blue"><br>
+        <input style="width: 100%; margin-top: 1px; margin-bottom: 5px" type="button" value="🧾 Ponto de Venda" onclick="cadvendapdv()" class="botao-blue"><br>      
+
+        <h4 class="titulo-cadastro">Financeiro</h4>
+        <input style="width: 100%;margin-top: 1px" type="button" id="btnRecaixa" value="🏢 Fluxo de Caixa" onclick="vercaixa()" class="botao-blue"><br>
+        <input style="width: 100%;;margin-top: 1px" type="button" id="btnRec" value="🏢 Contas a Receber" onclick="verreceber()" class="botao-blue"><br>
+        <input style="width: 100%;;margin-top: 1px" type="button" id="btnReCli" value="🏢 Quitação Receber" onclick="carregarClientesFiltro()" class="botao-blue"><br>
+        <input style="width: 100%; margin-top: 1px;" type="button" id="btnPag" value="🏢 Contas a Pagar" onclick="verpagar()" class="botao-blue"><br>      
+        <input style="width: 100%; margin-top: 1px; margin-bottom: 5px" type="button" id="btnPagFor" value="🏢 Quitação Pagar" onclick="carregarFornecedorFiltro()" class="botao-blue"><br>      
+                    
+        <h4 class="titulo-cadastro">Gerais</h4>
+        <input id="config" style="width: 100%; margin-top: 1px;" type="button" value="🛠️ Configurações" onclick="configura()" class="botao-blue">
+        <input id="limpa" style="width: 100%; margin-top: 1px;" type="button" value="🧹 Limpar Dados" onclick="limparNome()" class="botao-blue">
+        <input id="acercade" style="width: 100%; margin-top: 1px; " type="button" value="🖼️ Acerca de" onclick="acerca()" class="botao-blue">        
+        <input id="sair" style="width: 100%; margin-top: 1px; margin-bottom: 5px " type="button" value="🖼️ Sair do Sistema" onclick="criarBotaoLogoutComDialog()" class="botao-red">
+    </div>
+      
+    </div>
+   
+    <div class="conteudo">
+      <h1 style="font-family: Arial, sans-serif; font-size: 20px; text-align: center; background-color: #f1ab13; color: white; border-radius: 8px;">
+         Painel Principal
+      </h1><br>
+      
+      <div id="formCadastro" style="display: none">
+            <div style="border-radius: 10px; 
+              padding: 20px; 
+              margin: 20px auto; 
+              width: 60%; 
+              min-height: 60px; 
+              box-shadow: 4px 6px 20px rgba(0,0,0,0.7);">            
+              <h2 style="margin-left: 60px;" >Cadastro de Usuários</h2>      
+              <input style="margin-left: 60px;margin-top: 30px;" type="text" id="nome" placeholder="Login *">
+              <input style="margin-left: 60px;margin-top: 30px;" 
+              type="password" 
+              id="senha_1" 
+              placeholder="Senha *"><br>
+              <input style="margin-left: 60px;margin-top: 20px;" 
+              type="password" 
+              id="senha_2" 
+              placeholder="Repetir Senha *">
+              <input style="margin-left: 60px;margin-top: 20px;"type="text" id="email" placeholder="Email">
+              <button id="btnAdicionar">Adicionar</button>    
+            </div>
+            <div>
+              <div style="margin-top: 40px;">
+                <h3 style="margin-left: 60px;">Lista de Usuários</h3><br>                  
+                <ul style="margin-left: 60px;"id="lista"></ul><br>                  
+              </div>
+            </div>      
+      </div>
+
+      <div id="formEmitente" style="display: none; text-align: center; border: 2px solid #000; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px auto; 
+            width: 90%; 
+            min-height: 720px; 
+            box-shadow: 4px 6px 20px rgba(0,0,0,0.7);">
+        <h2 id="titulie">Cadastro de Emitente</h2>
+
+        <div style="margin-top: 15px;">                    
+          <label style="margin-left: 745px;"  for="ativoe">Ativo</label>
+          <input type="checkbox" id="ativoe" name="ativoe" value="true" checked>
+        </div>
+        <div style="margin-top: 10px;">                    
+          <label>Tipo de Cliente:<input type="radio" name="radtipe" value="fisica" checked> Fisica</label>
+          <label><input type="radio" name="radtipe" value="juridica"> Juridica</label>                                                                   
+        </div>                     
+        <div style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+            <label  for="cpfe">Digite seu CPF:</label>
+            <input style="width: 160px;" type="text" id="cpfe" oninput="this.value = formatarCPF(this.value)" placeholder="CPF *">        
+            <button id="botonvalidae" onclick="validar()" class="botao-azul">Validar</button>        
+            <label style="margin-left: 25px;"  for="cnpje">Digite seu CNPJ:</label>
+            <input style="width: 180px;" type="text" id="cnpje" maxlength="18" oninput="this.value = formatarCNPJ(this.value)" placeholder="CNPJ *" required>
+        </div>
+
+        <div style="margin-top: 5px;" >                   
+          <label for="rg">Digite seu RG:</label>                
+          <input style="width: 160px; text-transform: uppercase;" type="text" id="rge" placeholder="RG" required >        
+          <label style="margin-left: 10px;"for="emitente">Nome do Emitente:</label>
+          <input style="width: 310px; text-transform: uppercase;" type="text" id="emitente" name="emitente" placeholder="Nome do Emitente *" required>
+
+        </div>               
+          <div style="margin-top: 5px;" >            
+           <label for="fantasiae">Nome fantasia:</label>
+           <input style="width: 305px;text-transform: uppercase;"type="text" id="fantasiae" name="fantasiae" placeholder="Nome fantasia" required>            
+           <label for="datanascimentoe" id="labelData">Data de nascimento:</label>
+           <input type="date" id="datanascimentoe" name="datanascimentoe" >                   
+          </div>                 
+
+           <div style="margin-top: 5px;">            
+            <label for="iee">IE:</label>
+            <input style="width: 175px; text-transform: uppercase;" type="text" id="iee" name="iee" placeholder="Inscrição Estadual" required 
+                   oninput="this.value = formatarIE(this.value)">           
+            <label style="margin-left: 45px;" for="ime">IM:</label>
+            <input style="width: 175px; text-transform: uppercase;" type="text" id="ime" name="ime" placeholder="Inscrição Municipal" required 
+                   oninput="this.value = formatarIE(this.value)">                        
+            <label style="margin-left: 45px;" for="ime">Suframa:</label>
+            <input style="width: 175px; text-transform: uppercase;" type="text" id="suframa" name="suframa" placeholder="Suframa" required 
+             oninput="this.value = formatarIE(this.value)">                        
+          </div>   
+
+          <div style="margin-top: 5px;" >          
+            <label   for="rt">Regime Tributário:</label>
+            <select id="rt" style="width: 250px; text-transform: uppercase;" >
+              <option value="">Regime *</option>
+            </select>  
+            <label style="margin-left: 17px;"  for="segmento">Segmento:</label>
+            <select id="segmento" style="width: 250px; text-transform: uppercase;" >
+              <option value="">Segmento</option>
+            </select>
+          </div>           
+
+          <div style="margin-top: 5px;" >          
+            <label   for="faixa">Faixa  de  Tributação  ICMS  e  ISS:</label>
+            <select style="width: 460px; margin-left: 35px" id="faixa" style="width: 250px; text-transform: uppercase;" >
+              <option value="">Faixa de Tributação *</option>
+            </select>              
+          </div>           
+
+        <div style="margin-top: 5px;" >          
+          <label>Sexo:<input type="radio" name="radsexe" id ="sexuale" value="masculino" checked> Masculino</label>
+          <label><input type="radio" name="radsexe" value="feminino"> Feminino</label>                                                
+          <label style="margin-left: 88px;">Estado Civil: <input type="radio" name="radcive" id ="civile" value="solteiro" checked> Solteiro</label>
+          <label><input type="radio" name="radcive" value="casado"> Casado</label>
+          <label><input type="radio" name="radcive" value="divorciado"> Divorciado</label>
+          <label><input type="radio" name="radcive" value="viuvo"> Viúvo</label>                  
+        </div>     
+
+        <div style="margin-top: 5px;" >          
+          <label for="estadoe">Estado:</label>
+          <select style="margin-left: 5px;text-transform: uppercase;width: 300px;"id="estadoe">
+           <option value="">Estados</option>
+          </select>
+        <label style="margin-left: 17px;" id="cdse"  for="estado" for="cidadee">Cidade:</label>
+        <select id="cidadee" disabled style="text-transform: uppercase;width: 300px; "id="ciudadese">
+          <option value="">Cidades</option>
+        </select>        
+       </div>    
+
+        <div style="margin-top: 5px;" >          
+          <label   for="paise">Pais:</label>
+          <select id="paise" style="width: 250px; text-transform: uppercase;" id="nacionese">
+            <option value="">Paises</option>
+          </select>  
+            <label style="margin-left: 90px;"  for="nacionalidadee">Nacionalidade:</label>
+            <select id="nacionalidadee" style="width: 250px; text-transform: uppercase;"  >
+            <option value="">Nacionalidades</option>
+          </select>
+        </div>                
+
+        <div style="margin-top: 5px;">
+
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+              <label for="naturalidadee">Naturalidade:</label>
+              <select id="naturalidadee" style="width: 250px; text-transform: uppercase;">
+                <option value="">Naturalidades</option>
+              </select>
+              <label for="cepe">Digite seu CEP:</label>
+              <input style="width: 115px;" type="text" id="cepe" oninput="this.value = formatarCEP(this.value)">  
+              <button id="botoncepe" onclick="preencherEnderecoe()" class="botao-azul">Buscar Cep</button>
+          </div>
+
+          <div style="margin-top: 5px;">         
+            <label for="Ruae">Logradouro:</label>
+            <input style="width: 350px; text-transform: uppercase;" type="text" id="logradouroe" placeholder="Logradouro" />                 
+            <label style="margin-left: 15px" for="Bairroe">Bairro:</label>
+            <input type="text" style="text-transform: uppercase;" id="bairroe" placeholder="Bairro" /><br>          
+          </div>    
+          <div style="margin-top: 5px;" >                 
+            <label for="Ciudade" >Cidade:</label>
+            <input type="text" id="ciudade" style="margin-left: 35px;text-transform: uppercase;" placeholder="Cidade" />
+            <label for="Estadose" style="margin-left: 128px;">Estado:</label>
+            <input type="text" id="estadose" style="text-transform: uppercase;" placeholder="Estado (UF)" />
+          </div>  
+        </div>   
+        
+        <div style="margin-top: 5px;">       
+          <label for="numeroe" >Número:</label>
+          <input type="number" style="margin-left: 20px; text-transform: uppercase;" id="numeroe" name="numeroe" placeholder="Número" required>
+          <label for="e_maile"style="margin-left: 143px;">Email:</label>
+          <input type="TEXT" id="e_maile"style="text-transform: uppercase;" name="e_maile" placeholder="Email" required>       
+        </div> 
+
+        <div style="margin-top: 5px;" >           
+          <label for="telefoneemite">Telefone:</label>
+          <input type="text" style="margin-left: 15px;text-transform: uppercase;" id="telefoneemite" placeholder="Telefone">
+          <label style="margin-left: 120px" for="celulari">Celular:</label>
+          <input type="text" style="margin-left: 15px;text-transform: uppercase;" id="celulari"  placeholder="Celular">
+        </div>         
+        
+        <div style="margin-top: 5px; display: flex; justify-content: center; align-items: center; gap: 10px;">          
+          <button style="margin-left: 600px;" id="btnSalvarEmitente" class="botao-azul" onclick="verificare()">Salvar Emitente</button>
+          <button style="margin-left: 600px; display: none;" id="btnAlterarEmitente" class="botao-azul" onclick="VerificarCEP()">   Alterar Emitente</button>
+        </div>       
+                           
+      </div>
+
+      <div id="formServicio" style="display: none; text-align: center; border: 2px solid #000; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px auto; 
+            width: 90%; 
+            min-height: 350px; 
+            box-shadow: 4px 6px 20px rgba(0,0,0,0.7);">
+           <h2 id="tituloser" style="text-align: center;">Cadastro de Serviços</h2>     
+
+        <div style="margin-top: 30px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+          <label for="ativoser">Ativo</label>
+          <input type="checkbox" id="ativoser" name="ativoser" value="true" checked>
+        </div>        
+  
+        <div style="margin-top: 30px;" >                           
+          <label for="controleser">Controle:</label>
+          <input type="number" id="controleser" name="controleser" readonly style="text-align: right; width: 120px;">
+          <label style="margin-left: 65px;"for="servicio">Descrição do serviço:</label>
+          <input style="width: 350px; text-transform: uppercase;" maxlength="25" type="text" id="servicio" placeholder="Descrição *">
+        </div>             
+
+        <div style="margin-top: 10px;" >                           
+          <label for="precoservicio">Preço do Serviço:</label>
+          <input style="width: 150px;text-align: right;" type="number" step="0.01" id="precoservico" placeholder="*R$ 0,00" required>
+          <label style="margin-left: 170px;"for="duracao">Duração do Serviço:</label>
+          <input id="duracao" type="time" step="60" style="width: 150px; text-align: right;"  required
+>
+        </div>        
+
+        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+          <button style="margin-left: 630px;" id="btnSalvarServico" class="botao-azul" onclick="SalvarServico()">Salvar Serviço</button>        
+          <button style="margin-left: 630px; display: none" id="btnAlterarServico" class="botao-azul">Alterar Serviço</button>   
+        </div>      
+     </div>
+
+      <div id="formCliente" style="display: none; text-align: center;border: 2px solid #000; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px auto; 
+            width: 90%; 
+            min-height: 650px; 
+            box-shadow: 4px 6px 20px rgba(0,0,0,0.7);">
+        <h2 id="tituli">Cadastro de Clientes</h2>
+
+        <div style="margin-top: 15px;">                    
+          <label style="margin-left: 745px;"  for="ativo">Ativo</label>
+          <input type="checkbox" id="ativo" name="ativo" value="true" checked>
+        </div>
+        <div style="margin-top: 10px;">                    
+          <label>Tipo de Cliente:<input type="radio" name="radtip"  value="fisica" checked> Fisica</label>
+          <label><input type="radio" name="radtip" id="radtip" value="juridica"> Juridica</label>                                                                   
+        </div>                     
+        <div style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+            <label  for="cpf">Digite seu CPF:</label>
+            <input style="width: 160px;" type="text" id="cpf" oninput="this.value = formatarCPF(this.value)" placeholder="CPF *">        
+            <button id="botonvalida" onclick="validar()" class="botao-azul">Validar</button>        
+            <label style="margin-left: 25px;"  for="cnpj">Digite seu CNPJ:</label>
+            <input style="width: 180px;" type="text" id="cnpj" maxlength="18" oninput="this.value = formatarCNPJ(this.value)" placeholder="CNPJ *" required>
+        </div>
+
+        <div style="margin-top: 5px;" >                   
+          <label for="rg">Digite seu RG:</label>                
+          <input style="width: 160px; text-transform: uppercase;" type="text" id="rg" placeholder="RG" required >        
+          <label style="margin-left: 22px;"for="cliente">Nome do Cliente:</label>
+          <input style="width: 310px; text-transform: uppercase;" type="text" id="cliente" name="cliente" placeholder="Nome do Cliente *" required>
+
+        </div>               
+          <div style="margin-top: 5px;" >            
+           <label for="fantasia">Nome fantasia:</label>
+           <input style="width: 305px;text-transform: uppercase;"type="text" id="fantasia" name="fantasia" placeholder="Nome fantasia" required>            
+           <label for="datanascimento">Data de nascimento:</label>
+           <input type="date" id="datanascimento" name="datanascimento" >                   
+          </div>                 
+          <div style="margin-top: 5px;">            
+            <label for="ie">Inscrição Estadual:</label>
+            <input style="width: 200px; text-transform: uppercase;" type="text" id="ie" name="ie" placeholder="IE *" required 
+                   oninput="this.value = formatarIE(this.value)">           
+            <label style="margin-left: 45px;" for="im">Inscrição Municipal:</label>
+            <input style="width: 195px; text-transform: uppercase;" type="text" id="im" name="im" placeholder="IM" required 
+                   oninput="this.value = formatarIE(this.value)">                        
+          </div>                
+        <div style="margin-top: 5px;" >          
+          <label>Sexo:<input type="radio" name="radsex" id ="sexual" value="masculino" checked> Masculino</label>
+          <label><input type="radio" name="radsex" value="feminino"> Feminino</label>                                                
+          <label style="margin-left: 88px;">Estado Civil: <input type="radio" name="radciv" id ="civil" value="solteiro" checked> Solteiro</label>
+          <label><input type="radio" name="radciv" value="casado"> Casado</label>
+          <label><input type="radio" name="radciv" value="divorciado"> Divorciado</label>
+          <label><input type="radio" name="radciv" value="viuvo"> Viúvo</label>                  
+        </div>     
+
+        <div style="margin-top: 5px;" >          
+          <label for="estado">Estado:</label>
+          <select style="margin-left: 5px;text-transform: uppercase;width: 300px;"id="estado">
+           <option value="">Estados</option>
+          </select>
+        <label style="margin-left: 15px;" id="cds"  for="estado" for="cidade">Cidade:</label>
+        <select id="cidade" disabled style="text-transform: uppercase;width: 300px; "id="ciudades">
+          <option value="">Cidades</option>
+        </select>        
+       </div>    
+
+        <div style="margin-top: 5px;" >          
+          <label   for="pais">Pais:</label>
+          <select id="pais" style="width: 250px; text-transform: uppercase;" id="naciones">
+            <option value="">Paises</option>
+          </select>  
+            <label style="margin-left: 90px;"  for="nacionalidade">Nacionalidade:</label>
+            <select id="nacionalidade" style="width: 250px; text-transform: uppercase;" id="nacionalidad" >
+            <option value="">Nacionalidades</option>
+          </select>
+        </div>                
+
+        <div style="margin-top: 5px;">
+
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+              <label for="naturalidade">Naturalidade:</label>
+              <select id="naturalidade" style="width: 250px; text-transform: uppercase;">
+                <option value="">Naturalidades</option>
+              </select>
+              <label for="cep">Digite seu CEP:</label>
+              <input style="width: 115px;" type="text" id="cep" placeholder="CEP *" required oninput="this.value = formatarCEP(this.value)">  
+              <button id="botoncep" onclick="preencherEndereco()" class="botao-azul">Buscar Cep</button>
+          </div>
+
+          <div style="margin-top: 5px;">         
+            <label for="Rua">Logradouro:</label>
+            <input style="width: 350px; text-transform: uppercase;" type="text" id="logradouro" placeholder="Logradouro" />                 
+            <label style="margin-left: 15px" for="Bairro">Bairro:</label>
+            <input type="text" style="text-transform: uppercase;" id="bairro" placeholder="Bairro" /><br>          
+          </div>    
+          <div style="margin-top: 5px;" >                 
+            <label for="Ciudad" >Cidade:</label>
+            <input type="text" id="ciudad" style="margin-left: 35px;text-transform: uppercase;" placeholder="Cidade" />
+            <label for="Estados" style="margin-left: 128px;">Estado:</label>
+            <input type="text" id="estados" style="text-transform: uppercase;" placeholder="Estado (UF)" />
+          </div>  
+        </div>   
+        
+        <div style="margin-top: 5px;">       
+          <label for="numero" >Número:</label>
+          <input type="number" style="margin-left: 20px; text-transform: uppercase;" id="numero" name="numero" placeholder="Número *" required>
+          <label for="e_mail"style="margin-left: 143px;">Email:</label>
+          <input type="TEXT" id="e_mail"style="text-transform: uppercase;" name="e_mail" placeholder="Email" required>       
+        </div> 
+
+        <div style="margin-top: 5px;" >                 
+          <label for="telefone">Telefone:</label>
+          <input type="text" style="margin-left: 15px;text-transform: uppercase;" id="telefone" name="telefone" placeholder="Telefone">
+          <label style="margin-left: 118px;"for="celular">Celular:</label>
+          <input type="text" style="margin-left: 15px;text-transform: uppercase;" id="celular" name="celular" placeholder="Celular">
+        </div>         
+        
+        <div style="margin-top: 5px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+          <label for="limite">Limite de Crédito:</label>
+          <input style="width: 150px;" type="number" id="limite" step="0.01" placeholder="R$ 0,00">
+          <button style="margin-left: 296px;" id="btnSalvarCliente" onclick="verificar()">Salvar Cliente</button>
+          <button style="margin-left: 296px;" id="btnAlterarCliente" class="botao-azul">Alterar Cliente</button>          
+        </div>                                  
+      </div>
+      
+      <div id="formObjetos" style="display:none; text-align:center; margin: 0 auto; width: 90%; max-width: 800px;">
+          <h2 style="margin-bottom: 20px;">Cadastro de Objetos / Veículos</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; text-align: left;">
+          <div>
+            <label><b>Tipo:</b></label><br>
+            <select id="tipo" style="width:100%; padding:5px;">
+            <option value="VEÍCULO">Veículo</option>
+            <option value="EQUIPAMENTO">Equipamento</option>
+            <option value="MÁQUINA">Máquina</option>
+            <option value="OUTRO">Outro</option>
+            </select>
+          </div>
+
+      <div>
+        <label><b>Marca:</b></label><br>
+        <input type="text" id="marcao" style="width:100%; padding:5px;text-transform: uppercase;">
+    </div>
+
+    <div>
+      <label><b>Modelo:</b></label><br>
+      <input type="text" id="modelo" style="width:100%; padding:5px;text-transform: uppercase;">
+    </div>
+
+    <div>
+      <label><b>Ano:</b></label><br>
+      <input type="number" id="ano" style="width:100%; padding:5px;">
+    </div>
+
+    <div>
+      <label><b>Cor:</b></label><br>
+      <input type="text" id="cor" style="width:100%; padding:5px;text-transform: uppercase;">
+    </div>
+
+    <div>
+      <label><b>Placa / Série:</b></label><br>
+      <input type="text" id="serie" style="width:100%; padding:5px;text-transform: uppercase;">
+    </div>
+
+    <div style="grid-column: 1 / -1;">
+      <label><b>Observações:</b></label><br>
+      <textarea id="observacao" rows="3" style="width:100%; padding:5px;text-transform: uppercase;"></textarea>
+    </div>
+  </div>
+
+  <div style="margin-top: 15px;">    
+    <button id="salvartodo" onclick="AdicionarCliente()" class="botao-azul">💾 Salvar Tudo</button>
+    <button id="alterartodo" class="botao-azul">💾 Alterar Tudo</button>
+  </div>
+
+  <hr style="margin: 20px 0;">
+
+  <!-- 🔹 LISTA DE OBJETOS CADASTRADOS -->
+  <table border="1" style="width:100%; border-collapse:collapse;">
+  <thead style="background-color:#003366; color:white; font-family: Arial, sans-serif; font-size: 12px;"> <!-- azul escuro e texto branco -->
+    <tr>
+      <th>Tipo</th>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Ano</th>
+      <th>Cor</th>
+      <th>Placa/Série</th>
+      <th>Observações</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody id="tbodyObjetos">
+    <!-- Linhas preenchidas dinamicamente -->
+  </tbody>
+</table>
+
+
+  <div style="margin-top: 20px;">
+    <button onclick="voltarCliente()" class="botao-azul">⬅️ Voltar ao Cliente</button>
+  </div>
+</div>
+
+
+      <style>
+        table td 
+        {
+          font-size: 13px; /* ou 11px, 13px, você escolhe */
+        }
+      </style>      
+
+  <div id="formLista" style="display: none;">
+  <h2 style="text-align: center;">Listagem de Clientes</h2>          
+
+  <table id="tabelaClientes" style="
+    margin-top: 5px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  ">
+    <thead style="background-color: #f1ab13; color: white;">
+      <tr>
+        <th style="padding: 10px; border: 1px solid #ccc;">CPF</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">CNPJ</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Nome do Cliente</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Email</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Telefone</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Cidade</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- clientes serão inseridos aqui -->
+    </tbody>
+  </table>  
+  <div id="paginacaoClientes" style="margin-top: 10px; text-align: center;"></div>
+</div>
+
+
+
+<div id="formListaOS" style="display: none;">
+  <h2 style="text-align: center;">Listagem de Ordens de Serviço</h2>
+
+  <table id="tabelaOrdensServico" style="
+    margin-top: 5px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  ">
+    <thead style="background-color: #002f5f; color: white;">
+      <tr>
+        <th style="padding: 10px; border: 1px solid #ccc;">Nº OS</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Cliente</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Funcionário</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Objeto Consertado</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Status</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Produtos (R$)</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Serviços (R$)</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Desconto (R$)</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Acréscimo (R$)</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Total OS (R$)</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>      
+    </tbody>
+  </table>
+
+  <div id="paginacaoOS" style="margin-top: 10px; text-align: center;"></div>
+</div>
+
+      <div id="formPresenta" style="display: none;">
+      <section class="hero">
+        <div class="hero-content">
+       <!--   <h1>Oriente System, Ltda</h1>
+          <h2>Sistemas que Geran Resultados de Verdade</h2><br><br><br>
+          <p>Contatos: Telefone:(49) 34878-4586 / Celular:(49) 9999-43900 <br>e-mail: OrienteSystemConcordia@gmail.com</p>
+          <button>Tudo o que você precisa para crescer online.</button>-->
+        </div>
+      </section>
+      </div>
+
+      <div id="formProduto" style="display: none; text-align: center; border: 2px solid #000; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px auto; 
+            width: 90%; 
+            min-height: 500px; 
+            box-shadow: 4px 6px 20px rgba(0,0,0,0.7);">
+          <h2 id="titulop" style="text-align: center;">Cadastro de Produtos</h2>     
+
+        <div style="margin-top: 30px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+          <label for="ativop">Ativo</label>
+          <input type="checkbox" id="ativop" name="ativop" value="true" checked>
+          <label for="fracionado">Fracionado</label>
+          <input type="checkbox" id="fracionado" name="fracionado" value="true" checked>
+        </div>        
+  
+        <div style="margin-top: 10px;" >                           
+          <label for="controle">Controle:</label>
+          <input type="number" id="controle" name="controle" readonly style="text-align: right;">
+          <label for="produto">Descrição do produto:</label>
+          <input style="width: 300px; text-transform: uppercase;" maxlength="25" type="text" id="produto" placeholder="Descrição *">                        
+        </div>        
+
+        <div style="margin-top: 10px;" >                           
+          <label for="codbarras">Código de barras:</label>
+          <input style="width: 180px; text-transform: uppercase;" maxlength="13" type="text" id="codbarras" placeholder="Cód. de barras *" required inputmode="numeric">
+          <label style="margin-left: 125px;" for="selectFornecedor">Fornecedor:</label>
+          <select id="selectFornecedor">
+            <option value="">-- Selecione --</option>
+          </select>
+        </div>
+
+        <div style="margin-top: 10px;" >                           
+          <label for="marca">Marca do item:</label>
+          <input style="width: 235px;text-transform: uppercase;" maxlength="20" type="text" id="marca" placeholder="Marca do item" required>
+          <label style="margin-left: 60px;" for="grupo">Grupo:</label>
+          <input style="width: 300px;text-transform: uppercase;" maxlength="20" type="text" id="grupo" placeholder="Grupo do item">                        
+        </div>
+
+        <div style="margin-top: 10px;" >                           
+          <label for="subgrupo">Subgrupo do item:</label>
+          <input style="width: 240px;text-transform: uppercase;" maxlength="20" type="text" id="subgrupo" placeholder="Subgrupo do item" required>
+          <label style="margin-left: 70px;" for="quantidade">Quantidade de itens:</label>
+          <input style="width: 150px; text-align:right;" type="number" step="0.001" id="quantidade" placeholder="*0" required>
+        </div>
+
+        <div style="margin-top: 10px;" >                           
+          <label for="quantidademin">Qde. mínima:</label>
+          <input style="width: 100px;text-align:right;" type="number" step="1" id="quantidademin" placeholder="0" required>
+          <label style="margin-left: 34px;" for="quantidademax">Qde. máxima:</label>
+          <input style="width: 100px;text-align: right;" type="number" step="0.01" id="quantidademax" placeholder="0" required>
+          <label style="margin-left: 34px;" for="precocusto">Preço de Custo:</label>
+          <input style="width: 150px;text-align: right;" type="number" step="0.01" id="precocusto" placeholder="*R$ 0,00" required>
+        </div>
+
+        <div style="margin-top: 10px;" >                           
+          <label for="perclucro">Porcentagem de Lucro do item:</label>
+          <input style="width: 100px;text-align: right;" type="number" step="1" id="perclucro" placeholder="*%" required>
+          <label style="margin-left: 75px;" for="precovenda">Preço de Venda do item:</label>
+          <input style="width: 150px;text-align: right;" type="number" step="0.01" id="precovenda" placeholder="*R$ 0,00" required>
+        </div>
+
+        <div style="margin-top: 10px;" >                           
+          <label for="precorevenda">Preço de Revenda do item:</label>
+          <input style="width: 150px;text-align: right;" type="number" step="0.01" id="precorevenda" placeholder="R$ 0,00" required>        
+          <label style="margin-left: 44px;" for="precoatacado">Preço de Atacado do item:</label>
+          <input style="width: 150px;text-align: right;" type="number" step="0.01" id="precoatacado" placeholder="R$ 0,00" required>          
+        </div>
+
+  <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+    <button style="margin-left: 630px;" id="btnSalvarProduto" class="botao-azul" onclick="SalvarItem()">Salvar Produto</button>        
+    <button style="margin-left: 630px;" id="btnAlterarProduto" class="botao-azul">Alterar Produto</button>   
+  </div>      
+</div>
+
+
+  <div id="toast" class="toast">Fatura finalizada com sucesso</div>
+  <div id="formListaItens" style="display: none;">
+  <h2 style="text-align: center;">Listagem de Produtos</h2>          
+
+  <table id="tabelaProdutos" style="
+    margin-top: 5px;
+    width: 100%;
+    display: none;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    background-color: #fff;
+  ">
+    <thead style="background-color: #f1ab13; color: white;">
+      <tr>        
+        <th style="padding: 10px; border: 1px solid #ccc;">Controle</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Produto</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Cod. Barras</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Quantidade</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Preço Custo</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Preço Venda</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- produtos serão inseridos aqui -->
+    </tbody>
+  </table>
+  <div id="paginacaoProdutos" style="margin-top: 10px; text-align: center;"></div>
+</div>
+
+<div id="formListaServicos" style="display: none;">
+  <h2 style="text-align: center;">Listagem de Serviços</h2>          
+
+  <table id="tabelaServicos" style="
+    margin-top: 5px;
+    width: 100%;
+    display: none;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    background-color: #fff;
+  ">
+    <thead style="background-color: #002f5f; color: white;">
+      <tr>        
+        <th style="padding: 10px; border: 1px solid #ccc;">Controle</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Descrição do Serviço</th>        
+        <th style="padding: 10px; border: 1px solid #ccc;">Preço do Serviço</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Duraçao</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ativo</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- produtos serão inseridos aqui -->
+    </tbody>
+  </table>
+  <div id="paginacaoServicos" style="margin-top: 10px; text-align: center;"></div>
+</div>
+
+    <div id="formFuncionario" style="display: none; text-align: center; border: 2px solid #000; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px auto; 
+            width: 90%; 
+            min-height: 500px; 
+            box-shadow: 4px 6px 20px rgba(0,0,0,0.7);">
+      <h2 id="titulofun">Cadastro de Funcionários</h2>
+
+      <div style="margin-top: 30px;">                    
+        <label style="margin-left: 680px;"  for="ativof">Ativo</label>
+        <input type="checkbox" id="ativof" name="ativof" value="true" checked>
+      </div>   
+
+      <div style="margin-top: 10px;" >                           
+        <label for="cpff">Digite seu CPF:</label>
+        <input style="width: 200px;" type="text" id="cpff" oninput="this.value = formatarCPF(this.value)" placeholder="CPF *">          
+        <label style="margin-left: 86px;" for="rgf">Digite seu RG:</label>                
+        <input style="width: 200px; text-transform: uppercase;" maxlength="11" type="text" id="rgf" placeholder="RG" required >        
+      </div>             
+                     
+      <div style="margin-top: 10px;" >                           
+        <label for="funcionario">Nome do Funcionário:</label>
+        <input style="width: 200px; text-transform: uppercase;" type="text" id="funcionario" name="funcionario" placeholder="Funcionário *" required>
+        <label style="margin-left: 17px;"for="funcaof">Cargo ou função:</label>
+        <select id="funcaof">
+        <option value="">Selecione um cargo...</option>
+        </select>
+
+      </div>               
+
+      <div style="margin-top: 10px;" >                    
+         <label for="datanascimentof">Data de nascimento:</label>
+         <input type="date" id="datanascimentof" name="datanascimentof" >                   
+         <label style="margin-left: 105px;" for="datanaadmissaof">Data de admissão:</label>
+         <input type="date" id="datanaadmissaof" name="datanaadmissaof" >                   
+      </div>                 
+      
+      <div style="margin-top: 10px;" >          
+        <label >Sexo:<input type="radio" name="radsexf" id="sexolo" value="masculino" checked> Masculino</label>
+        <label><input type="radio" name="radsexf" value="feminino"> Feminino</label>                                                
+        <label style="margin-left: 67px;">Estado Civil: <input type="radio" name="radcivf" id="civilo" value="solteiro" checked> Solteiro</label>
+        <label><input type="radio" name="radcivf" value="casado"> Casado</label>
+        <label><input type="radio" name="radcivf" value="divorciado"> Divorciado</label>
+        <label><input type="radio" name="radcivf" value="viuvo"> Viúvo</label>                  
+      </div>                       
+      
+      <div style="margin-top: 10px;">         
+          <label for="cepf">Digite seu CEP:</label>
+          <input style="width: 120px;" type="text" id="cepf" placeholder="CEP *" required oninput="this.value = formatarCEP(this.value)">
+          <button id="botoncepf" onclick="preencherEnderecof()" class="botao-azul">Buscar Cep</button>          
+          <label for="Ruaf">Logradouro:</label>
+          <input style="width: 255px; text-transform: uppercase;" type="text" id="logradourof" placeholder="Logradouro" />                           
+      </div>    
+
+      <div style="margin-top: 10px;">                   
+          <label style="margin-left: 4px;" for="bairrof">Bairro:</label>
+          <input type="text" style="text-transform: uppercase;" id="bairrof" placeholder="Bairro" />          
+          <label style="margin-left: 126px;" for="Ciudadf" >Cidade:</label>
+          <input type="text" id="ciudadf" style="margin-left: 30px;text-transform: uppercase;" placeholder="Cidade" />
+      </div>        
+
+      <div style="margin-top: 10px;" >                           
+          <label style="margin-left: 5px;"for="Estadosf">Estado:</label>
+          <input type="text" id="estadosf" style="text-transform: uppercase;" placeholder="Estado (UF)" />
+          <label style="margin-left: 120px;" for="numerof" >Número:</label>
+          <input type="number" style="margin-left: 20px; text-transform: uppercase;" id="numerof" name="numerof" placeholder="Número *" required>
+      </div>  
+      
+      <div style="margin-top: 10px;">               
+        <label for="e_mailf">Email:</label>
+        <input type="TEXT" id="e_mailf"style="text-transform: uppercase;" name="e_mailf" placeholder="Email" required>       
+        <label style="margin-left: 125px;" for="telefonef">Telefone:</label>
+        <input type="text" style="margin-left: 15px;text-transform: uppercase;" id="telefonef" name="telefonef" placeholder="Telefone">
+      </div> 
+
+      <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+        <label for="celularf">Celular:</label>
+        <input type="text" id="celularf" name="celularf" placeholder="Celular" style="text-transform: uppercase;">
+        <button style="margin-left: 248px;" id="btnSalvarFuncionario" class="botao-azul" onclick="SalvarFunc()">Salvar Funcionário</button>
+        <button style="margin-left: 248px;" id="btnAlterarFuncionario" class="botao-azul">Alterar Funcionário</button>
+      </div>
+
+    </div>
+
+    <div id="formListaFuncionarios" style="display: none;">
+  <h2 style="text-align: center;">Listagem de Funcionários</h2>
+
+  <table id="tabelaFuncionarios" style="
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  ">
+    <thead style="background-color: #f1ab13; color: white;">
+      <tr>
+        <th style="padding: 10px; border: 1px solid #ccc;">CPF</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">RG</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Nome do Funcionário</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Função</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Email</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Telefone</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>      
+    </tbody>
+  </table>
+  <div id="paginacaoFuncionarios" style="margin-top: 10px; text-align: center; "></div>   
+</div>
+
+   <div id="formFornecedor" style="display: none; border: 2px solid #000; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px auto; 
+            width: 90%; 
+            min-height: 450px; 
+            box-shadow: 4px 6px 20px rgba(0,0,0,0.7);">
+  <h2 id="titulifo" style="text-align: center;">Cadastro de Fornecedores</h2>
+
+  <div style="margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+    <label for="ativofo">Ativo</label>
+    <input type="checkbox" id="ativofo" name="ativofo" value="true" checked>
+  </div>
+
+  <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 12px;">
+    <label for="cnpjfo">CNPJ:</label>
+    <input style="width: 200px;" type="text" id="cnpjfo" oninput="this.value = formatarCNPJ(this.value)" placeholder="CNPJ *">          
+    <label style="margin-left: 225px;" for="iefo">IE:</label>                
+    <input style="width: 200px; text-transform: uppercase;" maxlength="11" type="text" id="iefo" placeholder="IE *" required>        
+  </div>             
+
+  <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 12px;">                           
+    <label for="fornecedore">Nome do Fornecedor:</label>
+    <input style="width: 200px; text-transform: uppercase;" type="text" id="fornecedore" maxlength="25" name="fornecedore" placeholder="Fornecedor *" required>
+    <label style="margin-left: 45px;" for="cepfo">CEP:</label>
+    <input style="width: 105px;" type="text" id="cepfo" placeholder="CEP *" required oninput="this.value = formatarCEP(this.value)">
+    <button id="botoncepfo" onclick="preencherEnderecofo()" class="botao-azul">Buscar CEP</button>                  
+  </div>                                  
+  
+  <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 12px;">         
+    <label for="logradourofo">Logradouro:</label>
+    <input style="width: 320px; text-transform: uppercase;" type="text" id="logradourofo" placeholder="Logradouro" />                           
+    <label for="bairrofo">Bairro:</label>
+    <input type="text" style="text-transform: uppercase;" id="bairrofo" placeholder="Bairro" />        
+  </div>        
+
+  <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 12px;">                 
+    <label for="ciudadfo">Cidade:</label>
+    <input type="text" id="ciudadfo" style="text-transform: uppercase;" placeholder="Cidade" />
+    <label style="margin-left: 270px;" for="estadosfo">Estado:</label>
+    <input type="text" id="estadosfo" style="width: 80px; text-transform: uppercase;" placeholder="UF" />
+  </div>  
+  
+  <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 12px;">       
+    <label for="numerofo">Número:</label>
+    <input type="number" id="numerofo" name="numerofo" placeholder="Número *" required>
+    <label style="margin-left: 130px;" for="e_mailfo">Email:</label>
+    <input type="text" id="e_mailfo" style="width: 220px; text-transform: uppercase;" name="e_mailfo" placeholder="Email" required>       
+  </div> 
+
+  <div style="margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 12px;">                 
+    <label for="telefonefo">Telefone:</label>
+    <input type="text" id="telefonefo" name="telefonefo" placeholder="Telefone" style="text-transform: uppercase;">
+    <label style="margin-left: 110px;" for="celularfo">Celular:</label>
+    <input type="text" id="celularfo" name="celularfo" placeholder="Celular" style="text-transform: uppercase;">
+  </div>                       
+  
+  <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+    <button style="margin-left: 550px;" id="btnSalvarFornecedor" class="botao-azul" onclick="SalvarFornec()">Salvar Fornecedor</button> 
+    <button style="margin-left: 550px;"id="btnAlterarFornecedor" class="botao-azul">Alterar Fornecedor</button>  
+  </div>                 
+</div>
+
+
+  <div id="formListaFornecedores" style="display: none;">
+  <h2 style="text-align: center;">Listagem de Fornecedores</h2>          
+
+  <table id="tabelaFornecedores" style="
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  ">
+    <thead style="background-color: #f1ab13; color: white;">
+      <tr>
+        <th style="padding: 10px; border: 1px solid #ccc;">CNPJ</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">IE</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Nome do Fornecedor</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Email</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Telefone</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Celular</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- fornecedores serão inseridos aqui -->
+    </tbody>
+  </table>
+  <div id="paginacaoFornecedores" style="margin-top: 10px; text-align: center;"></div>
+</div>
+
+
+ <div id="formListaReceber" style="display: none;">
+  <h2 style="text-align: center; margin-bottom: 5px;">Contas a Receber</h2>          
+
+  <div style="margin-bottom: 2px; text-align: left; font-size: 14px;">
+    <label><input type="radio" name="filtroStatus" value="todos" checked> Todas</label>
+    <label style="margin-left: 15px;"><input type="radio" name="filtroStatus" value="aberto"> Abertas</label>
+    <label style="margin-left: 15px;"><input type="radio" name="filtroStatus" value="pago"> Pagas</label>
+  </div>
+
+  <table id="tabelaReceber" style="
+    margin-top: 10px;
+    width: 100%;
+    display: none;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    background-color: #fff;
+  ">
+    <thead style="background-color: #f1ab13; color: #fff;">
+      <tr>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Controle</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Funcionário</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Cliente</th>          
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Valor Original</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Valor Pago</th>          
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Parcela Nº</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Total Parcelas</th>  
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Cadastro</th>  
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Vencimento</th>  
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Recibimento</th>          
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Multa</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Juros</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Status</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Ações</th>     
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Linhas geradas dinamicamente -->
+    </tbody>
+  </table>
+  <div id="paginacaoReceber" style="text-align: center; margin-top: 15px;"></div>
+</div>
+
+   <div id="formLogin" style="display: none;  width: 100%;  height: 170%;  background: linear-gradient(135deg, #ebd496, #f7c76e);  
+                       align-items: flex-start; /* Começa do topo */  justify-content: center; 
+                        padding-top: 80px; /* Controla a distância do topo */
+                        font-family: 'Segoe UI', sans-serif;">
+      <div style="background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); width: 320px; text-align: center;">
+        <h2 style="margin-bottom: 24px; color: #ebba50;">Entrar no Sistema</h2>
+        <form onsubmit="return validarLogin()">
+          <input type="text" id="usuario" placeholder="Usuário" required
+          style="width: 100%; padding: 12px; margin-bottom: 18px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;" />
+          <input type="password" id="senha" placeholder="Senha" required
+          style="width: 100%; padding: 12px; margin-bottom: 18px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;" />
+          <input type="submit" value="Login"
+          style="width: 100%; padding: 12px; border: none; background-color: #f7c65d; color: white; border-radius: 6px; font-size: 16px; cursor: pointer;" />
+        </form>
+      <div style="margin-top: 20px; font-size: 13px; color: #666;">
+      © 2025 - Sistema Comercial
+    </div>
+
+  </div>
+</div>
+
+  <div id="formAcerca" style="display: none; padding: 30px; font-size: 16px; line-height: 1.8; text-align: justify; max-width: 700px; margin: auto; font-family: Arial, sans-serif; color: #333;">
+
+    <h3 style="display: flex; align-items: center; gap: 10px; justify-content: center; font-size: 22px; margin-bottom: 20px; font-weight: 600; color: #1976d2;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="16" x2="12" y2="12"/>
+      <line x1="12" y1="8" x2="12" y2="8"/>
+    </svg>
+    Acerca de
+  </h3>
+  
+  <h2 style="text-align: center; margin-bottom: 30px; font-weight: 700; font-size: 28px;">
+    Sistema de Gestão Comercial e Financeira
+  </h2>
+  
+
+  <p>
+    Nosso sistema é uma solução completa e robusta, desenvolvida para atender às necessidades de empresas que buscam uma gestão integrada e eficiente. Ele oferece controle detalhado sobre os principais processos comerciais, administrativos e financeiros, facilitando o dia a dia empresarial e contribuindo para decisões estratégicas mais assertivas.
+  </p>
+
+  <p>
+    Entre seus recursos essenciais, destacam-se:
+  </p>
+
+  <ul style="margin-left: 25px; margin-bottom: 25px;">
+    <li><strong>Cadastro e atualização</strong> de usuários, funcionários, clientes, fornecedores e produtos;</li>
+    <li><strong>Controle de estoque</strong> em tempo real, com atualização automática nas entradas (compras) e saídas (vendas);</li>
+    <li><strong>Emissão de notas de compra</strong> com geração automática de parcelas e controle de vencimentos;</li>
+    <li><strong>PDV (Ponto de Venda)</strong> rápido e intuitivo, com seleção de itens, cálculo automático de troco e geração de parcelas a receber;</li>
+    <li><strong>Várias formas de pagamento</strong>, incluindo dinheiro, cartão de débito, cartão de crédito, carnê de loja e até múltiplas combinações na mesma transação;</li>
+    <li><strong>Aplicação de descontos ou acréscimos</strong> no momento da venda ou compra, tanto em valor fixo quanto em percentual, com efeito direto no valor total faturado;</li>
+    <li><strong>Geração de comprovantes de compra e venda</strong>, com layout compatível para impressão em papel comum ou cupom 80mm. Se a operação for a crédito, o comprovante apresenta todas as parcelas, com valores e vencimentos detalhados;</li>
+    <li><strong>Gestão de contas a pagar e a receber</strong>, com controle total de parcelas, vencimentos, quitações e histórico completo de movimentações;</li>
+    <li><strong>Cálculo automático de juros e multa</strong> para contas vencidas, tanto em recebimentos quanto em pagamentos, com atualização automática no sistema;</li>
+    <li><strong>Fluxo de caixa</strong> atualizado em tempo real, refletindo cada movimentação financeira do sistema;</li>
+    <li><strong>Relatórios e histórico</strong> de vendas, compras, movimentações financeiras e estoque, facilitando análises e auditoria.</li>
+  </ul>
+
+  <p>
+    O sistema foi desenvolvido com <strong>JavaScript</strong> no frontend e backend, utilizando <strong>Node.js</strong> e <strong>Express.js</strong> para o servidor, com banco de dados <strong>SQLite</strong> local, leve e eficiente. Isso garante excelente desempenho mesmo em máquinas mais simples.
+  </p>
+
+  <p>
+    A interface é acessada via navegador e desenvolvida com <strong>HTML5</strong>, <strong>CSS3</strong> e <strong>JavaScript puro</strong>, oferecendo uma experiência moderna, responsiva e de fácil uso, sem necessidade de instalações adicionais.
+  </p>
+
+  <p>
+    Com esta plataforma, sua empresa terá controle total sobre todas as áreas operacionais, desde o estoque até o caixa, passando por clientes, fornecedores, vendas e contas, em uma ferramenta simples, leve e poderosa.
+  </p>
+</div>
+
+  <div id="formListaReceberCliente" style="display: none;">
+  <h2 style="text-align: center;">Contas a Receber pelo Cliente</h2>
+
+  <!-- Filtro para selecionar cliente -->
+  <div style="
+    margin-top: 10px; 
+    margin-bottom: 20px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px; 
+    flex-wrap: wrap;
+  ">
+    <label for="selectFuncionario">Selecione o Funcionário:</label>
+    <select id="selectFuncionarioReceber" style="padding: 6px; font-size: 14px;">
+      <option value="">-- Selecione --</option>
+    </select>
+
+    <label for="selectCliFiltro" style="margin: 0;">Selecione o Cliente:</label>
+    <select id="selectCliFiltro" style="padding: 6px; font-size: 14px;">
+      <option value="">-- Selecione --</option>
+    </select>
+
+    <button onclick="verParcelasDoCliente()" id="btnReCliB" style="
+      padding: 6px 15px; 
+      font-size: 14px; 
+      cursor: pointer;
+      background-color: #f1ab13; 
+      border: none; 
+      color: white;
+      border-radius: 5px;
+    ">Buscar Parcelas</button>
+  </div>
+
+  <!-- Tabela de parcelas -->
+  <div>
+    <table id="tabelaReceberCliente" style="
+      margin-top: 2px;
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+      font-size: 8px;
+      background-color: #fff;
+    ">
+      <thead style="background-color: #f1ab13; color: white;">
+        <tr>
+          <th style="padding: 10px; text-align: left;">
+            <input type="checkbox" id="checkTodos" title="Selecionar todas" />
+          </th>          
+          <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Controle</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Funcionário</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Cliente</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Valor Original</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Valor Pago</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Parcela Nº</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Total Parcelas</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Cadastro</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Vencimento</th>          
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Multa</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Juros</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Status</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- As linhas das parcelas serão inseridas aqui via JavaScript -->
+      </tbody>
+    </table>
+    
+    <div id="paginacaoParcelasCliente" style="display: flex; justify-content: center;"></div>
+
+    <!-- Botão para pagar -->
+    <button id="btnPagarParcelas" style="
+      display: none;      
+      padding: 8px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    ">Pagar Selecionadas</button>
+  </div>
+</div>
+
+ <div id="formListaPagar" style="display: none;">
+  <h2 style="text-align: center; margin-bottom: 5px;">Contas a Pagar</h2>          
+
+  <div style="margin-bottom: 5px; text-align: left; font-size: 14px;">
+    <label><input type="radio" name="filtroStatusPagar" value="todos" checked> Todas</label>
+    <label style="margin-left: 15px;"><input type="radio" name="filtroStatusPagar" value="aberto"> Abertas</label>
+    <label style="margin-left: 15px;"><input type="radio" name="filtroStatusPagar" value="pago"> Pagas</label>
+  </div>
+
+  <table id="tabelaPagar" style="
+    margin-top: 10px;
+    width: 100%;
+    display: none;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    background-color: #fff;
+  ">
+    <thead style="background-color: #f1ab13; color: #fff;">
+      <tr>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Controle</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Funcionário</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Fornecedor</th>          
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Valor Original</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Valor Pago</th>          
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Parcela Nº</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Total Parcelas</th>  
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Cadastro</th>  
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Vencimento</th>  
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Pagamento</th>  
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Multa</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Juros</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Status</th>     
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Ações</th>     
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Linhas geradas dinamicamente -->
+    </tbody>
+  </table>
+  <div id="paginacaoPagar" style="text-align: center; margin-top: 15px;"></div>
+</div>
+
+<div id="formListaPagarFornecedor" style="display: none;">
+  <h2 style="text-align: center;">Contas a Pagar por Fornecedor</h2>
+
+  <!-- Filtro para selecionar fornecedor -->
+  <div style="
+    margin-top: 10px; 
+    margin-bottom: 15px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px; 
+    flex-wrap: wrap;
+  ">
+    <label for="selectFuncionarioPagar">Selecione o Funcionário:</label>
+    <select id="selectFuncionarioPagar" style="padding: 6px; font-size: 14px;">
+      <option value="">-- Selecione --</option>
+    </select>
+
+    <label for="selectForFiltro">Selecione o Fornecedor:</label>
+    <select id="selectForFiltro" style="padding: 6px; font-size: 14px;">
+      <option value="">-- Selecione --</option>
+    </select>           
+
+    <button 
+      onclick="verParcelasDoFornecedor()" 
+      id="btnReCliPagar"
+      style="
+        padding: 6px 15px; 
+        font-size: 14px; 
+        cursor: pointer;
+        background-color:#f1ab13; 
+        border: none; 
+        color: white;
+        border-radius: 5px;
+      "
+    >
+      Buscar Parcelas
+    </button>
+  </div>
+
+  <!-- Tabela de parcelas -->
+  <div>
+    <table id="tabelaPagarFornecedor" style="
+      margin-top: 20px;
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+      font-size: 8px;
+      background-color: #fff;
+    ">
+      <thead style="background-color: #f1ab13; color: white;">
+        <tr>
+          <th style="padding: 10px; text-align: left;">
+            <input type="checkbox" id="checkTodos1" title="Selecionar todas" />
+          </th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center">Controle</th>
+          <th style="padding: 10px; border: 1px solid #ddd; text-align: center">Funcionário</th>
+          <th style="padding: 10px; border: 1px solid #ddd; text-align: center">Cliente</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center">Valor Original</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center">Valor Pago</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Parcela Nº</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Total Parcelas</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Cadastro</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Vencimento</th>          
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center">Multa</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center">Juros</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Status</th>
+          <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- As linhas das parcelas serão inseridas aqui via JavaScript -->
+      </tbody>
+    </table>
+
+    <!-- Botão para pagar -->
+    <button id="btnPagarParcelasFornecedor" style="
+      display: none;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    ">
+      Pagar Selecionadas
+    </button>
+  </div>
+</div>
+
+
+  <div id="formListaCaixa" style="display: none;">
+  <h2 style="text-align: center;">Fluxo de Caixa</h2>
+
+  <div style="margin-bottom: 5px;">
+    <label>
+      <input type="checkbox" id="checkDia" onchange="trocarFiltro('dia')" checked>
+      Mostrar do Dia
+    </label>
+    &nbsp;&nbsp;
+    <label>
+      <input type="checkbox" id="checkTotal" onchange="trocarFiltro('total')">
+      Mostrar Total
+    </label>
+  </div>
+
+  <table id="tabelaCaixa" style="
+    margin-top: 5px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  ">
+    <thead style="background-color: #f1ab13; color: white;">
+      <tr>
+        <th style="padding: 10px; border: 1px solid #ccc;">Controle</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Funcionário</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Cliente</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Fornecedor</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Descrição</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Espécies</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Valor de Entrada</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Valor de Saída</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Data de Cadastro</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center; border: 1px solid #ccc;">000123</td>
+        <td style="border: 1px solid #ccc;">João</td>
+        <td style="border: 1px solid #ccc;">Maria</td>
+        <td style="border: 1px solid #ccc;">Fornecedor X</td>
+        <td style="border: 1px solid #ccc;">Venda à vista</td>
+        <td style="border: 1px solid #ccc;">Dinheiro</td>
+        <td style="color: green; border: 1px solid #ccc;">R$ 150,00</td>
+        <td style="color: red; border: 1px solid #ccc;">R$ 0,00</td>
+        <td style="border: 1px solid #ccc;">19/07/2025 09:23:11</td>
+        <td style="text-align: center; border: 1px solid #ccc;">
+          <button title="Editar" style="background: none; border: none; color: #1976d2; font-size: 16px; cursor: pointer;">✏️</button>
+          <button title="Excluir" style="background: none; border: none; color: #d32f2f; font-size: 16px; cursor: pointer;">🗑️</button>
+          <button title="Imprimir" style="background: none; border: none; color: #388e3c; font-size: 16px; cursor: pointer;">🖨️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="paginacaoCaixa" style="text-align: center; margin-top: 15px;"></div>
+</div>
+
+   <div id="formConfig" style="display: none;">
+    <h2 id="titulomodg" style="text-align: center;">Configurações do Sistema</h2>      
+    <label>Configuração do PDV</label><br> <br>
+    <label>Tipo de busca:</label>
+    <div style="margin-top: 10px; display: flex; align-items: center; gap: 12px;">      
+      <input type="radio" name="tipoBuscag" value="controle" checked> Controle
+      <input type="radio" name="tipoBuscag" value="codbarras"> Código de Barras
+    </div>
+    <div style="margin-top: 5px; text-align: left;">
+      <button style="margin-left: 1px;" id="btnAlterarConfig" class="botao-azul">Alterar</button>         
+    </div>    
+   </div>   
+
+   <!--Inicio OS-->
+   <div id="formOs" style="display: none;">
+        <h2 id="tituloos" style="text-align: center;">Ordem de Serviço</h2>              
+              <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px;">
+                <label for="controleod">Ordem de Serviçõ Nº:</label>
+                <input class="input-normal" style="text-align: right;  width: 100px; font-size: 14px;" type="text" id="controleod">                    
+                <label style="margin-left: 265px;" for="selecstatusos">Situação ou Status da OS:</label>
+                <select id="selecstatusos" style="padding: 6px; font-size: 14px;">
+                  <option value="">-- Selecione um status --</option>
+                </select>
+              </div>      
+              <div style="margin-top: 10px; display: flex; align-items: center; gap: 12px;">
+                <label for="selectFuncionarioos">Funcionário ou Vendedor:</label>
+                 <select id="selectFuncionarioos"style="padding: 6px; font-size: 14px;width: 230px;">
+                  <option value="">-- Selecione --</option>
+                </select>                
+              </div>      
+              <div style="margin-top: 10px">
+                <label id="clienos" for="selectClienteos">Nome do Cliente:</label>
+                <select id="selectClienteos" style="padding: 6px; font-size: 14px; width: 300px;">
+                  <option disabled selected hidden>-- Selecione um cliente --</option>
+                </select>
+               
+              <div style="margin-top: 10px;font-size: 14px">
+                <label style="font-size: 14px;"for="cpfos">CPF/CNPJ:</label>
+                <input class="input-normal" style="width: 130px; font-size: 14px;" type="text" id="cpfos">          
+                <label style="font-size: 14px;"for="cepos">CEP:</label>
+                <input class="input-normal"style="width: 94px;font-size: 14px;" type="text" id="cepos">          
+                <label style="font-size: 14px;"for="endos">ENDEREÇO:</label>
+                <input class="input-normal"style="width: 35%;font-size: 14px;" type="text" id="endos">          
+                <label style="font-size: 14px;"for="numcli">NÚMERO:</label>
+                <input class="input-normal" style="width: 12%;font-size: 14px;" type="text" id="numcli">          
+              </div>
+              <div style="margin-top: 10px">
+               <label id="objetosos" for="selectObjetos">Objetos/Veículos:</label>
+               <select id="selectObjetos" style="padding: 6px; font-size: 14px; width: 300px;">
+                 <option value="">-- SELECIONE --</option>
+              </select>
+              </div>
+              <div style="margin-top: 10px;">
+                <label style="font-size: 14px;"for="obtipo">TIPO DE OBJETO:</label>
+                <input class="input-normal" style="width: 100px;font-size: 14px;" type="text" id="obtipo">
+
+                <label style="font-size: 14px;"for="obplaca">PLACA/SERIAL:</label>
+                <input class="input-normal" style="width: 8%;font-size: 14px;" type="text" id="obplaca">
+
+                <label style="font-size: 14px;"for="obmarca">MARCA:</label>
+                <input class="input-normal" style="width: 100px;font-size: 14px;" type="text" id="obmarca">
+
+                <label style="font-size: 14px;"for="obmodelo">MODELO:</label>
+                <input class="input-normal" style="width: 10%;font-size: 14px;" type="text" id="obmodelo">
+
+                <label style="font-size: 14px;"for="obano">ANO:</label>
+                <input class="input-normal" style="width: 3%;font-size: 14px;" type="text" id="obano">
+
+                <label style="font-size: 14px;"for="obcor">COR:</label>
+                <input class="input-normal" style="width: 102px;font-size: 14px;" type="text" id="obcor">
+              </div>
+          </div>      
+          <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <label for="descricaoos">Descrição do defeito:</label>
+              <textarea 
+                id="descricaoos" 
+                style="width: 100%; height: 120px; font-size: 14px; resize: vertical; padding: 6px;"
+                placeholder="Digite aqui a descrição do defeito...">
+              </textarea>
+          </div>    
+          <form style="margin-top: 30px;" id="form-ordens">
+            <h3 id="tituloos" style="text-align: center; margin-bottom: 15px;">Lançamento de Serviços e Itens</h3>              
+            <input id="entraos" style="width: 550px; text-align: right; "  type="text" name="entraos" placeholder="Qtd*Controle" maxlength="24" required>
+            <select id="selectFuncionariosTecnicos" style="padding: 8px; font-size: 16px; width: 300px;">
+            <option value="">-- Selecione o responsável --</option>
+          </select>
+            <button id="btnadicionaros" class="botao-azul" type="submit">Adicionar</button>
+          </form>         
+  
+          <table class="tabela-venda">
+            <thead>
+              <tr>            
+                <th>Produto</th>            
+                <th style="text-align: center; padding-right: 50px;">Preço</th>
+                <th>Quantidade</th>
+                <th style="text-align: right; padding-right: 100px;">Total</th> 
+                <th>Código</th>
+                <th>Funcionário</th>                
+                <th style="text-align: right; padding-right: 100px;">Ações</th>          
+              </tr>
+            </thead>
+            <tbody id="tabela-vendaos">
+            </tbody>
+          </table>    
+          <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px;">
+              <label for="laudo">Laudo Técnico:</label>
+              <textarea 
+                id="laudo" 
+                style="width: 100%; height: 120px; font-size: 14px; resize: vertical; padding: 6px;"
+                placeholder="Digite aqui o laudo técnico...">
+              </textarea>
+          </div>
+          <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px;">
+              <label for="observa">Observações:</label>
+              <textarea 
+                id="observa" 
+                style="width: 100%; height: 120px; font-size: 14px; resize: vertical; padding: 6px;"
+                placeholder="Digite aqui as observações...">
+              </textarea>
+          </div>
+          <div style="margin-top: 10px;">
+                <label style="font-size: 14px; margin-left: 6px"for="totitemos">ITENS R$:</label>
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="totitemos">
+
+                <label style="font-size: 14px;margin-left: 6px"for="totservos">SERVIÇOS R$:</label>
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="totservos">
+
+                <label id="ladescos" style="font-size: 14px;margin-left: 6px"for="descos">DESCONTO R$:</label>  
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="descos">
+
+                <label id="laascos" style="font-size: 14px;margin-left: 6px"for="ascos">ACRÉSCIMO R$:</label>
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="ascos">
+
+                <label id="ladescoso" style="font-size: 14px;margin-left: 6px"for="descoso">DESCONTO R$:</label>  
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="descoso">
+
+                <label id="laascoso"style="font-size: 14px;margin-left: 6px"for="ascoso">ACRÉSCIMO R$:</label>
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="ascoso">
+
+                <label id="ladiantamento"style="font-size: 14px;margin-left: 7px"for="adiantamento">ADIANTAMENTO R$:</label>
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="adiantamento">
+
+                <label id="ladiantamentox"style="font-size: 14px;margin-left: 7px"for="adiantamentox">ADIANTAMENTO R$:</label>
+                <input class="input-normal" style="width: 75px;font-size: 14px;text-align: right;" type="number" id="adiantamentox">
+
+                
+              </div>
+              <div style="margin-top: 10px;">
+                <label style="font-size: 14px; margin-left: 79%"for="totalgeralos">TOTAL GERAL R$:</label>
+                <input class="input-normal" style="width: 75px;font-size: 14px; text-align: right;" type="number" id="totalgeralos">                
+              </div>
+          <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+            <button style="margin-left: 730px;" id="btnCancelarOrdem" class="botao-azul" onclick="cancelarOrdem()">Cancelar</button>             
+            <button style="margin-left: 730px;" id="btnCancelarOrdemAlt" class="botao-azul" onclick="cancelarOrdemAlt()">Cancelar</button>             
+            <button style="margin-left: 730px;" id="btnCancelarVer" class="botao-azul" onclick="cancelarVer()">Cancelar</button>             
+            <button style="margin-left: 10px;" id="btnSalvarOrdem" class="botao-azul" onclick="salvarOrdem()">Salvar OS</button>             
+            <button style="margin-left: 10px;" id="btnAltOrdem" class="botao-azul" onclick="alterarOrdem()">Alterar OS</button>             
+          </div>   
+
+    </div>
+
+    <!--Fim OS-->
+
+   <div id="formPdv" style="display: none;">
+        <h2 id="titulomod" style="text-align: center;">Ponto de Venda</h2>      
+        <label>Tipo de busca:</label>
+        <div style="margin-top: 10px; display: flex; align-items: center; gap: 12px;">      
+          <input type="radio" name="tipoBusca" value="controle" checked> Controle
+          <input type="radio" name="tipoBusca" value="codbarras"> Código de Barras
+        </div>
+
+        <div style="margin-top: 30px; display: flex; align-items: center; gap: 12px;">
+          <label for="selectFuncionario">Selecione o Funcionário:</label>
+          <select id="selectFuncionario"style="padding: 6px; font-size: 14px;">
+            <option value="">-- Selecione --</option>
+          </select>
+          <label id="clien" for="selectCliente">Selecione o Cliente:</label>
+            <select id="selectCliente"style="padding: 6px; font-size: 14px;">
+            <option value="">-- Selecione --</option>
+          </select>  
+          <label id="forno" for="selectFornece">Selecione o Fornecedor:</label>
+            <select id="selectFornece"style="padding: 6px; font-size: 14px;">
+            <option value="">-- Selecione --</option>
+            </select>    
+          </div>      
+    
+          <form id="form-venda">
+            <input id="entra" style="width: 90%; text-align: right; "  type="text" name="entrada" placeholder="Qtd*Tipo de busca" maxlength="24" required>
+            <button class="botao-azul" type="submit">Adicionar</button>
+          </form>
+  
+          <table class="tabela-venda">
+            <thead>
+              <tr>            
+                <th>Produto</th>            
+                <th style="text-align: center; padding-right: 50px;">Preço</th>
+                <th>Quantidade</th>
+                <th style="text-align: right; padding-right: 100px;">Total</th>          
+                <th style="text-align: right; padding-right: 100px;">Ações</th>          
+              </tr>
+            </thead>
+            <tbody id="tabela-venda">
+            </tbody>
+          </table>    
+    </div>
+
+    <div id="detalhesParcelamento" style="
+      display: none; 
+      margin-top: 10px; 
+      padding: 15px; 
+      text-align: center;
+      border: 2px solid #ccc; 
+      border-radius: 8px; 
+      background-color: #f9f9f9;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      ">
+      <label for="qtdParc">Detalhe do Parcelamento</label><br><br>
+      <label for="qtdParcelas">Quantidade de Parcelas:</label>
+      <input type="number" id="qtdParcelas" min="1" style="width: 50px; text-align: center;"><br>
+      <label for="vencimentoDia">Dia de Vencimento:</label>
+      <input style="margin-left: 40px;width: 50px; text-align: center;" type="number" id="vencimentoDia" min="1" max="31" > 
+
+      <div id="parcelasGeradas" style="margin-top: 10px; font-family: monospace; font-size: 16px; white-space: pre;"></div>
+    </div>
+    
+   </div>      
+
+   <!--FUNCIONANDO-->
+
+    <!-- Painel Direito -->
+    <div id="formPainel" style="display: none;" class="painel-direito tw-w-full tw-w-max[425px]">      
+      <h1 style="font-size: 20px; text-align: center;background-color: #f1ab13;color: white; border-radius: 8px;">Painel de Operações</h1><br><br>
+      <div id="resultado" style="font-size: 22px;">
+    </div>
+    
+    <div id="formCalculos" style="display: none;">
+     <div style="margin-top: 1px; text-align: left;">
+        <h3 style="color: rgb(2, 2, 97); text-align: center;">Finalizar Operação</h3>
+
+      <div style="display: flex; gap: 30px; margin-top: 20px;">       
+        <div>
+          <label style="font-size: 16px;" for="desconto">Desconto:</label><br>
+          <input type="number" id="desconto" placeholder="R$ 0,00" step="0.01" style="width: 88px;text-align: right">
+          <label style="margin-left: 1px;">
+          <input type="checkbox" id="descontoPorcentagem"> %
+          </label>
+        </div>
+        
+        <div>
+          <label style="font-size: 16px;" for="acrescimo">Acréscimo:</label><br>
+          <input type="number" id="acrescimo" placeholder="R$ 0,00" step="0.01" style="width: 88px;text-align: right">
+          <label style="margin-left: 5px;">
+          <input type="checkbox" id="acrescimoPorcentagem"> %
+          </label>
+        </div>
+      </div>            
+      
+        <label style="margin-top: 10px;font-size: 16px;" for="dinheiro" >Dinheiro ou PIX: </label><br>
+        <input style="text-align: right;" type="number" id="dinheiro" step="0.01" placeholder="R$ 0,00"><br>          
+        <label style="font-size: 16px;"for="cartaoDebito">Cartão de Débito: </label>
+        <input style="text-align: right;"type="number" id="cartaoDebito" step="0.01" placeholder="R$ 0,00"><br>              
+
+        <label style="font-size: 16px;"for="cartaoCredito">Cartão de Crédito: </label>
+        <input style="text-align: right;"type="number" id="cartaoCredito" step="0.01" placeholder="R$ 0,00"><br>      
+        <label style="font-size: 16px;">
+          <input type="checkbox" id="parceladoCredito">
+          Cartão Parcelado
+        </label><br><br>         
+
+        <label style="font-size: 16px;"for="troco">Troco da operação: </label>
+        <input style="text-align: right;"type="number" id="troco" step="0.01" placeholder="R$ 0,00"><br>       
+        <label style="font-size: 16px;" for="falta">Valor faltante da operação: </label>
+        <input style="text-align: right;"type="number" id="falta" step="0.01" placeholder="R$ 0,00"><br>             
+        <p id="resulta"></p>
+       </div>
+
+       <div style="margin-top: 10px; text-align: right; font-size: 16px;">
+         <strong>Sub Total:</strong> R$ <span id="subtotal">0.00</span><br>
+         <strong>Desconto:</strong> R$ <span id="dcto">0.00</span><br>
+         <strong>Acréscimo:</strong> R$ <span id="acres">0.00</span>
+      </div>
+
+       <div style="margin-top: 5px; text-align: right; font-size: 20px; color: rgb(4, 4, 82); font-weight: bold;">
+       Total Geral: R$ <span id="total-geral">0.00</span>
+</div>      
+     
+       <div style="margin-top: 5px; text-align: left;">
+        <button style="margin-left: 1px;" id="btnFinalizarFi" class="botao-azul">Finalizar</button>         
+        <button style="margin-left: 1px;" id="btnFinalizarFc" class="botao-azul">Finalizar</button>         
+        <button style="margin-left: 1px;" id="btnFinalizar" class="botao-azul">Finalizar</button>         
+        <button style="margin-left: 1px;" id="btnFinalizarOs" class="botao-azul">Finalizar</button>         
+        <button style="margin-left: 1px;" id="btnFinalizarOsOs" class="botao-azul">Finalizar</button>         
+        <button style="margin-left: 1px;"id="btnCancelar" class="botao-azul">Cancelar</button>            
+        <button style="margin-left: 1px;"id="btnCancelarv" class="botao-azul">Cancelar</button>            
+        <button style="margin-left: 1px;"id="btnCancelaros" class="botao-azul">Cancelar</button>            
+       </div>  
+      </div>
+
+     </div>      
+      <script src="usuarios.js"></script>  
+      <script src="cadcliente.js"></script>        
+      <script src="cademitente.js"></script>  
+      <script src="caditem.js"></script>        
+      <script src="cadobjetos.js"></script>        
+      <script src="cadfuncionario.js"></script>  
+      <script src="altcliente.js"></script>  
+      <script src="altproduto.js"></script>        
+      <script src="altfuncionario.js"></script>  
+      <script src="altemitente.js"></script>  
+      <script src="altconfiguracao.js"></script>        
+      <script src="vercliente.js"></script>  
+      <script src="verproduto.js"></script>              
+      <script src="verfuncionario.js"></script>  
+      <script src="listaclientes.js"></script>        
+      <script src="listafuncionarios.js"></script> 
+      <script src="listaprodutos.js"></script>        
+      <script src="cadfornecedor.js"></script>  
+      <script src="listafornecedores.js"></script> 
+      <script src="altfornecedor.js"></script>
+      <script src="verfornecedor.js"></script>  
+      <script src="listareceber.js"></script>  
+      <script src="listarecebercliente.js"></script>  
+      <script src="listapagarfornecedor.js"></script>  
+      <script src="listapagar.js"></script> 
+      <script src="listacaixa.js"></script>        
+      <script src="pdvsimples.js"></script>  
+      <script src="pdvcompra.js"></script>  
+      <script src="funcoes.js"></script>  
+</body>
+</html>
