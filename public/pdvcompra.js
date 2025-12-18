@@ -472,7 +472,7 @@ function finalizarCompra() {
   btnCancelac.addEventListener('click', () => {
   cancelarCompra();    
   });
-
+  //Nocas git push -u origin main
   function calcularCompra() {
   let dinheiro = parseFloat(document.getElementById('dinheiro').value) || 0;
   let cartaoDebito = parseFloat(document.getElementById('cartaoDebito').value) || 0;
