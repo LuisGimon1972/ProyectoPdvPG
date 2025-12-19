@@ -73,6 +73,13 @@ function VerClienteM(controle) {
         alert('Erro ao carregar cliente: ' + err.message);
       });
   }
+  
+  function isoParaInputDate(valor) {
+  if (!valor) return ''
+  return valor instanceof Date
+    ? valor.toISOString().split('T')[0]
+    : String(valor).split('T')[0]
+}
 
 function EditarCliente(controle) {
         const msg = window.document.getElementById('tituli');
@@ -121,7 +128,7 @@ function EditarCliente(controle) {
         document.getElementById('estados').value = cliente.uf || '';
         document.getElementById('telefone').value = cliente.telefone || '';
         document.getElementById('celular').value = cliente.celular || '';
-        document.getElementById('datanascimento').value = cliente.datanascimento || '';                
+        document.getElementById('datanascimento').value = isoParaInputDate(cliente.datanascimento)
         document.getElementById('rg').value = cliente.rg || '';
         document.getElementById('cpf').value = cliente.cpf || '';
         document.getElementById('e_mail').value = cliente.e_mail || '';        
