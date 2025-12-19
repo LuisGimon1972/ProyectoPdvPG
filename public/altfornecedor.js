@@ -10,7 +10,7 @@ function VerFornecedor(controle) {
   document.getElementById('btnSalvarFornecedor').style.display = 'none';
   document.getElementById('formPresenta').style.display = 'none';                              
   document.getElementById('formFornecedor').style.display = 'block';    
-  document.getElementById('formPainel').style.display = 'block';     
+  document.getElementById('formPainel').style.display = 'none';     
   const btnFornecedor = document.getElementById('btnAlterarFornecedor');
   const newBtnFornecedor = btnFornecedor.cloneNode(true);
   btnFornecedor.parentNode.replaceChild(newBtnFornecedor, btnFornecedor);
@@ -53,7 +53,7 @@ function EditarFornecedore(controle) {
         document.getElementById('btnSalvarFornecedor').style.display = 'none';
         document.getElementById('formPresenta').style.display = 'none';                              
         document.getElementById('formFornecedor').style.display = 'block';    
-        document.getElementById('formPainel').style.display = 'block';     
+        document.getElementById('formPainel').style.display = 'none';     
         const btnFornecedor = document.getElementById('btnAlterarFornecedor');
         const newBtnFornecedor = btnFornecedor.cloneNode(true);
         btnFornecedor.parentNode.replaceChild(newBtnFornecedor, btnFornecedor);

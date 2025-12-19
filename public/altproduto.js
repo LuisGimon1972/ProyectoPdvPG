@@ -37,7 +37,7 @@ fetch(`/produtos/${controle}`)
     if (formPresenta) formPresenta.style.display = 'none';
     if (formLista) formLista.style.display = 'none';
     formProduto.style.display = 'block'; 
-    document.getElementById('formPainel').style.display = 'block';     
+    document.getElementById('formPainel').style.display = 'none';     
     document.getElementById('btnSalvarProduto').style.display = 'none';
     document.getElementById('btnAlterarProduto').style.display = 'block';
     document.getElementById('ativop').style.display = 'inline-block';
@@ -63,8 +63,7 @@ fetch(`/produtos/${controle}`)
     newBtnProduto.addEventListener('click', () => {          
     AlterarProduto(controle, codbarrasaux);
     formProduto.style.display = 'block';   
-    document.getElementById('formPainel').style.display = 'block';     
-    document.getElementById('formPainel').style.display = 'block';      
+    document.getElementById('formPainel').style.display = 'none';         
     }, { once: true });
   })
   .catch(err => {

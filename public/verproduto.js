@@ -1,6 +1,6 @@
 function VisualizarProduto(controle) {  
     limparNome();
-      document.getElementById('formPainel').style.display = 'block';           
+      document.getElementById('formPainel').style.display = 'none';           
       document.getElementById('formListaItens').style.display = 'none';
       const msgi = window.document.getElementById('titulop');
       msgi.innerHTML = `Visualização de dados de produtos`;       

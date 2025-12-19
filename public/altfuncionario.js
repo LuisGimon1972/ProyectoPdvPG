@@ -9,7 +9,7 @@ function VerFuncionario(controle) {
     if (formPresenta) formPresenta.style.display = 'none';
     if (formLista) formLista.style.display = 'none';
     formFuncionario.style.display = 'block';   
-    document.getElementById('formPainel').style.display = 'block';     
+    document.getElementById('formPainel').style.display = 'none';     
     const btnFuncionario = document.getElementById('btnAlterarFuncionario');
     btnFuncionario.style.display = 'block';
     document.getElementById('btnSalvarFuncionario').style.display = 'none';                          
@@ -89,8 +89,7 @@ if (selectps) {
     const formLista = document.getElementById('formLista');      
     if (formPresenta) formPresenta.style.display = 'none';
     if (formLista) formLista.style.display = 'none';
-    formFuncionario.style.display = 'block';  
-    document.getElementById('formPainel').style.display = 'block';      
+    formFuncionario.style.display = 'block';      
     const btnFuncionario = document.getElementById('btnAlterarFuncionario');
     btnFuncionario.style.display = 'block';
     document.getElementById('btnSalvarFuncionario').style.display = 'none';                          
@@ -98,8 +97,7 @@ if (selectps) {
     btnFuncionario.parentNode.replaceChild(newBtnFuncionario, btnFuncionario);
     newBtnFuncionario.addEventListener('click', () => {          
       AlterarFuncionario(controle);
-      formFuncionario.style.display = 'block';
-      document.getElementById('formPainel').style.display = 'block';     
+      formFuncionario.style.display = 'block';      
     }, { once: true });
   })
   .catch(err => {
