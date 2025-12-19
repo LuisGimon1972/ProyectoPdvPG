@@ -928,14 +928,14 @@ async function salvarLancamentosCaixaC() {
 
   camposPagamento.forEach(id => {
   const campo = document.getElementById(id);
-  if (campo && swi==0) {    
+  if (campo && swti==0) {    
     campo.addEventListener('blur', () => {
       calcularCompra();
       console.log(`Campo ${id} perdeu o foco!`);
     });
     
     campo.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' && swi==0) {
+      if (event.key === 'Enter' && swti==0) {
         calcularCompra();
         console.log(`Campo ${id} acionado com Enter!`);       
         const index = camposPagamento.indexOf(id);
