@@ -1673,11 +1673,22 @@ app.put('/fornecedores/:controle', async (req, res) => {
 function normalizarData(valor) {
   if (!valor) return null
 
-  if (valor instanceof Date) return valor.toISOString()
+  // Já é Date
+  if (valor instanceof Date) {
+    return valor.toISOString()
+  }
 
   if (typeof valor === 'string') {
-    // ISO
-    if (valor.includes('T')) return valor
+
+    // Se vier lixo misturado (caso atual)
+    if (valor.includes(',') || valor.includes('-') && valor.includes(':')) {
+      return new Date().toISOString()
+    }
+
+    // ISO completo
+    if (valor.includes('T')) {
+      return valor
+    }
 
     // dd/mm/yyyy
     if (valor.includes('/')) {
@@ -1686,11 +1697,15 @@ function normalizarData(valor) {
     }
 
     // yyyy-mm-dd
-    return `${valor}T00:00:00`
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      return `${valor}T00:00:00`
+    }
   }
 
-  return null
+  // fallback seguro
+  return new Date().toISOString()
 }
+
 
 
 app.delete('/fornecedores/:controle', async (req, res) => {
