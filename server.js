@@ -1604,14 +1604,14 @@ app.put('/fornecedores/:controle', async (req, res) => {
     telefone, celular, email, datahoracadastrofo, observacoes, ativo
   } = req.body
 
-  if (!fornecedor || !ativo) {
+  if (!fornecedor || ativo === undefined) {
     return res.status(400).json({
       erro: 'Campos obrigatórios: fornecedor e ativo.'
     })
   }
 
   try {
-    const result = await pool.query(
+    const { rows, rowCount } = await pool.query(
       `
       UPDATE public.fornecedores SET
         fornecedor = $1,
@@ -1645,27 +1645,52 @@ app.put('/fornecedores/:controle', async (req, res) => {
         telefone || null,
         celular || null,
         email || null,
-        datahoracadastrofo || new Date(),
+        normalizarData(datahoracadastrofo) ?? new Date().toISOString(),
         observacoes || null,
         ativo,
         controle
       ]
     )
 
-    if (result.rowCount === 0) {
+    if (rowCount === 0) {
       return res.status(404).json({ erro: 'Fornecedor não encontrado.' })
     }
 
     res.status(200).json({
       atualizado: true,
-      controle: result.rows[0].controle
+      controle: rows[0].controle
     })
 
   } catch (err) {
     console.error('❌ Erro ao atualizar fornecedor:', err.message)
-    res.status(500).json({ erro: 'Erro ao atualizar fornecedor' })
+    res.status(500).json({
+      erro: 'Erro ao atualizar fornecedor',
+      detalhe: err.message
+    })
   }
 })
+
+function normalizarData(valor) {
+  if (!valor) return null
+
+  if (valor instanceof Date) return valor.toISOString()
+
+  if (typeof valor === 'string') {
+    // ISO
+    if (valor.includes('T')) return valor
+
+    // dd/mm/yyyy
+    if (valor.includes('/')) {
+      const [dia, mes, ano] = valor.split('/')
+      return `${ano}-${mes}-${dia}T00:00:00`
+    }
+
+    // yyyy-mm-dd
+    return `${valor}T00:00:00`
+  }
+
+  return null
+}
 
 
 app.delete('/fornecedores/:controle', async (req, res) => {

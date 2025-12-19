@@ -41,9 +41,9 @@ function renderizarPaginaFuncionarios() {
         <td style="text-align: center;">${funcionario.cpff}</td>
         <td>${funcionario.rgf}</td>
         <td>${funcionario.funcionariof}</td>
-        <td>${funcionario.funcaof}</td>
-        <td>${funcionario.e_mailf}</td>
-        <td>${funcionario.telefonef}</td>
+        <td>${funcionario.funcaof ||''}</td>
+        <td>${funcionario.e_mailf ||''}</td>
+        <td>${funcionario.telefonef ||''}</td>
         <td>
           <button class="btnEditarf" data-controle="${funcionario.controle}">✏️</button>
           <button class="btnExcluirf" data-controle="${funcionario.controle}">🗑️</button>
