@@ -211,3 +211,5 @@ CREATE TABLE IF NOT EXISTS usuarios (
   senha TEXT NOT NULL,
   email TEXT
 );
+
+drop TABLE  fornecedores
