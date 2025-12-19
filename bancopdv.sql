@@ -1,6 +1,7 @@
 -- =========================
 -- CAIXA
 -- =========================
+drop TABLE  fornecedores
 CREATE TABLE IF NOT EXISTS caixa (
   controle SERIAL PRIMARY KEY,
   cod_cliente INTEGER,
@@ -212,4 +213,3 @@ CREATE TABLE IF NOT EXISTS usuarios (
   email TEXT
 );
 
-drop TABLE  fornecedores
