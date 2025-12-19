@@ -880,18 +880,43 @@ app.get('/produtos/:controle', async (req, res) => {
 })
 
 app.put('/produtos/:controle', async (req, res) => {
-  const {
-    produto, codbarras, fornecedor, grupoestoque, subgrupoestoque, marca,
-    precocusto, perclucro, precovenda, precorevenda, precoatacado,
-    quantidade, quantidademin, quantidademax, ativop, fracionado, aplicacao, duracao
-  } = req.body
-
   const { controle } = req.params
 
+  const {
+    produto,
+    codbarras,
+    fornecedor,
+    grupoestoque,
+    subgrupoestoque,
+    marca,
+    precocusto,
+    perclucro,
+    precovenda,
+    precorevenda,
+    precoatacado,
+    quantidade,
+    quantidademin,
+    quantidademax,
+    ativop,
+    fracionado,
+    aplicacao,
+    duracao
+  } = req.body
+
+  if (!controle) {
+    return res.status(400).json({ erro: 'Controle não informado' })
+  }
+
+  if (!produto || !precovenda || !ativop || !aplicacao) {
+    return res.status(400).json({
+      erro: 'Campos obrigatórios: produto, precovenda, ativop, aplicacao'
+    })
+  }
+
   try {
-    const { rowCount } = await pool.query(
+    const result = await pool.query(
       `
-      UPDATE public.produtos SET
+      UPDATE produtos SET
         produto = $1,
         codbarras = $2,
         fornecedor = $3,
@@ -913,23 +938,47 @@ app.put('/produtos/:controle', async (req, res) => {
       WHERE controle = $19
       `,
       [
-        produto, codbarras, fornecedor, grupoestoque, subgrupoestoque, marca,
-        precocusto, perclucro, precovenda, precorevenda, precoatacado,
-        quantidade, quantidademin, quantidademax, ativop, fracionado, aplicacao, duracao,
+        produto,
+        codbarras || null,
+        fornecedor || null,
+        grupoestoque || null,
+        subgrupoestoque || null,
+        marca || null,
+        precocusto || 0,
+        perclucro || 0,
+        precovenda,
+        precorevenda || null,
+        precoatacado || null,
+        quantidade || 0,
+        quantidademin || 0,
+        quantidademax || 0,
+        ativop,
+        fracionado || 'NÃO',
+        aplicacao,
+        duracao || 0,
         controle
       ]
     )
 
-    if (rowCount === 0) {
-      return res.status(404).json({ erro: 'Produto não encontrado.' })
+    if (result.rowCount === 0) {
+      return res.status(404).json({ erro: 'Produto não encontrado' })
     }
 
-    res.json({ atualizado: true, controle })
+    res.json({
+      sucesso: true,
+      mensagem: 'Produto atualizado com sucesso',
+      controle
+    })
+
   } catch (err) {
-    console.error('❌ Erro ao atualizar produto:', err.message)
-    res.status(500).json({ erro: 'Erro ao atualizar produto' })
+    console.error('❌ Erro ao atualizar produto:', err)
+    res.status(500).json({
+      erro: 'Erro ao atualizar produto',
+      detalhe: err.message
+    })
   }
 })
+
 
 app.delete('/produtos/:controle', async (req, res) => {
   const { controle } = req.params
