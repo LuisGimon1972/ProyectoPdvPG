@@ -1,0 +1,3 @@
+tracert sg1.sgbr.com.br >> C:\sbgr\master\tracert.txt
+
+tracert sg1.sgbr.com.br >> C:\tracert\tracert.txt

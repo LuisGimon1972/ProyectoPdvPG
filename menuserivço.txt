@@ -1,0 +1,7 @@
+<!--
+        <h3>Ordens de Serviço</h3>
+        <input style="width: 100%;margin-top: 3px" type="button" id="btnservico" value="📋 Cadastro de Serviços" onclick="cadastroservicos()" class="botao-blue"><br>
+        <input style="width: 100%;;margin-top: 3px" type="button" id="btnListaservico" value="📋 Listado de Serviços" onclick="listaservico()" class="botao-blue"><br>
+        <input style="width: 100%;margin-top: 3px;" type="button" id="btnReCli" value="📋 Cadastro O.S." onclick="cadordemos()" class="botao-blue"><br>
+        <input style="width: 100%;margin-top: 3px; margin-bottom: 5px" type="button" id="btnLisos" value="📋 Ordens de Serviço" onclick="listaros()" class="botao-blue"><br>
+        -->   
