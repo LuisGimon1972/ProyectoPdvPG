@@ -841,7 +841,7 @@ app.get('/produtos', async (req, res) => {
       SELECT *
       FROM public.produtos
       WHERE aplicacao = $1
-      ORDER BY produto
+      ORDER BY controle
       `,
       ['PRODUTOS']
     )
@@ -1672,37 +1672,31 @@ app.put('/fornecedores/:controle', async (req, res) => {
 
 function normalizarData(valor) {
   if (!valor) return null
-
-  // Já é Date
+  
   if (valor instanceof Date) {
     return valor.toISOString()
   }
 
   if (typeof valor === 'string') {
 
-    // Se vier lixo misturado (caso atual)
     if (valor.includes(',') || valor.includes('-') && valor.includes(':')) {
       return new Date().toISOString()
     }
 
-    // ISO completo
     if (valor.includes('T')) {
       return valor
     }
 
-    // dd/mm/yyyy
     if (valor.includes('/')) {
       const [dia, mes, ano] = valor.split('/')
       return `${ano}-${mes}-${dia}T00:00:00`
     }
 
-    // yyyy-mm-dd
     if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
       return `${valor}T00:00:00`
     }
   }
 
-  // fallback seguro
   return new Date().toISOString()
 }
 
