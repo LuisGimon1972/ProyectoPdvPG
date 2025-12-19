@@ -281,39 +281,108 @@ app.delete('/usuarios/:id', async (req, res) => {
 
 // ROTAS EMITENTE
 app.post('/emitente', async (req, res) => {
-  const dados = req.body;
+  const {
+    emitente,
+    cidade,
+    cep,
+    endereco,
+    bairro,
+    numero,
+    pais,
+    uf,
+    ativo,
+    telefone,
+    celular,
+    datanascimento,
+    datahoracadastro,
+    naturalidade,
+    nacionalidade,
+    rg,
+    sexo,
+    estadocivil,
+    cpf,
+    cnpj,
+    tipocliente,
+    e_mail,
+    ie,
+    im,
+    suframa,
+    crt,
+    segmento,
+    faixa,
+    fantasia,
+    tipodebusca
+  } = req.body
 
-  const sql = `
-    INSERT INTO emitente (
-      emitente, cidade, cep, endereco, bairro, numero, pais, uf, ativo,
-      telefone, celular, datanascimento, datahoracadastro, naturalidade,
-      nacionalidade, rg, sexo, estadocivil, cpf, cnpj, tipocliente,
-      e_mail, ie, im, suframa, crt, segmento, faixa, fantasia, tipodebusca
-    ) VALUES (
-      $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
-      $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
-      $21,$22,$23,$24,$25,$26,$27,$28,$29,$30
-    )
-    RETURNING controle
-  `;
-
-  const params = [
-    dados.emitente, dados.cidade, dados.cep, dados.endereco, dados.bairro, dados.numero,
-    dados.pais, dados.uf, dados.ativo, dados.telefone, dados.celular,
-    dados.datanascimento, dados.datahoracadastro, dados.naturalidade, dados.nacionalidade,
-    dados.rg, dados.sexo, dados.estadocivil, dados.cpf, dados.cnpj,
-    dados.tipocliente, dados.e_mail, dados.ie, dados.im, dados.suframa,
-    dados.crt, dados.segmento, dados.faixa, dados.fantasia, dados.tipodebusca
-  ];
+  if (!emitente || !ativo) {
+    return res.status(400).json({
+      erro: 'Campos obrigatórios: emitente e ativo'
+    })
+  }
 
   try {
-    const result = await pool.query(sql, params);
-    res.status(201).json({ controle: result.rows[0].controle, ...dados });
+    const { rows } = await pool.query(
+      `
+      INSERT INTO emitente (
+        emitente, cidade, cep, endereco, bairro, numero, pais, uf, ativo,
+        telefone, celular, datanascimento, datahoracadastro, naturalidade,
+        nacionalidade, rg, sexo, estadocivil, cpf, cnpj, tipocliente,
+        e_mail, ie, im, suframa, crt, segmento, faixa, fantasia, tipodebusca
+      ) VALUES (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,
+        $10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
+        $21,$22,$23,$24,$25,$26,$27,$28,$29,$30
+      )
+      RETURNING controle
+      `,
+      [
+        emitente,
+        cidade || null,
+        cep || null,
+        endereco || null,
+        bairro || null,
+        numero || null,
+        pais || null,
+        uf || null,
+        ativo,
+        telefone || null,
+        celular || null,
+        datanascimento || null,
+        datahoracadastro || new Date(),
+        naturalidade || null,
+        nacionalidade || null,
+        rg || null,
+        sexo || null,
+        estadocivil || null,
+        cpf || null,
+        cnpj || null,
+        tipocliente || null,
+        e_mail || null,
+        ie || null,
+        im || null,
+        suframa || null,
+        crt || null,
+        segmento || null,
+        faixa || null,
+        fantasia || null,
+        tipodebusca || null
+      ]
+    )
+
+    res.status(201).json({
+      sucesso: true,
+      controle: rows[0].controle
+    })
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Erro ao inserir emitente.' });
+    console.error('❌ Erro ao inserir emitente:', err)
+    res.status(500).json({
+      erro: 'Erro ao inserir emitente',
+      detalhe: err.message
+    })
   }
-});
+})
+
 
 
 // Listar todos emitentes
