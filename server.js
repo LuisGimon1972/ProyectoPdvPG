@@ -14,12 +14,12 @@ app.use(express.json());
 
 // ---------- CONFIGURAÇÃO POSTGRES ----------
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'bancopdv', // ✅ banco deve EXISTIR
-  password: '8451',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL
+    ? { rejectUnauthorized: false }
+    : false
 });
+
 
 const fs = require('fs')
 
