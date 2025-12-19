@@ -1,7 +1,14 @@
 -- =========================
 -- CAIXA
 -- =========================
-drop TABLE  fornecedores
+DROP TABLE IF EXISTS pagar CASCADE;
+DROP TABLE IF EXISTS receber CASCADE;
+DROP TABLE IF EXISTS caixa CASCADE;
+DROP TABLE IF EXISTS produtos CASCADE;
+DROP TABLE IF EXISTS funcionarios CASCADE;
+DROP TABLE IF EXISTS fornecedores CASCADE;
+DROP TABLE IF EXISTS clientes CASCADE;
+
 CREATE TABLE IF NOT EXISTS caixa (
   controle SERIAL PRIMARY KEY,
   cod_cliente INTEGER,
