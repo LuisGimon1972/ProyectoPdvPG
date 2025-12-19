@@ -488,8 +488,7 @@ function finalizarCompra() {
   total = arredondar(total);
 
   let totalPago = dinheiro + cartaoDebito + cartaoCredito;
-  totalPago = arredondar(totalPago);
-  //alert(swti)
+  totalPago = arredondar(totalPago);  
   let desabilitar = dinheiro >= totalGeralc && (cartaoDebito + cartaoCredito)==0 &&swti==0;  
     document.getElementById('cartaoDebito').disabled  = desabilitar;
     document.getElementById('cartaoCredito').disabled = desabilitar;
