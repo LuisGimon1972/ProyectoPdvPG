@@ -317,3 +317,8 @@ input[type=number]::-webkit-inner-spin-button {
   transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
 
+.btn-pequeno {
+  font-size: 12px;
+  padding: 4px 8px;
+  height: 26px;
+}
