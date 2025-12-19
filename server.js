@@ -1386,58 +1386,77 @@ app.delete('/funcionarios/:controle', async (req, res) => {
 
 app.post('/fornecedores', async (req, res) => {
   const {
-    fornecedor, cnpj, ie, endereco, bairro, cidade, uf, cep, numero,
-    telefone, celular, email, datahoracadastrofo, observacoes, ativo
+    fornecedor,
+    cnpj,
+    ie,
+    endereco,
+    bairro,
+    cidade,
+    uf,
+    cep,
+    numero,
+    telefone,
+    celular,
+    email,
+    datahoracadastrofo,
+    observacoes,
+    ativo
   } = req.body
 
-  if (!fornecedor || !ativo) {
+  // ✅ Validações corretas
+  if (!fornecedor || typeof ativo !== 'boolean') {
     return res.status(400).json({
-      erro: 'Campos obrigatórios: fornecedor e ativo'
+      erro: 'Campos obrigatórios: fornecedor e ativo (boolean)'
     })
   }
 
   try {
-    const { rows } = await pool.query(
-      `
-      INSERT INTO public.fornecedores (
+    const sql = `
+      INSERT INTO fornecedores (
         fornecedor, cnpj, ie, endereco, bairro, cidade, uf, cep, numero,
         telefone, celular, email, datahoracadastrofo, observacoes, ativo
-      ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9,
-        $10, $11, $12, $13, $14, $15
+      )
+      VALUES (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,
+        $10,$11,$12,$13,$14,$15
       )
       RETURNING controle
-      `,
-      [
-        fornecedor,
-        cnpj || null,
-        ie || null,
-        endereco || null,
-        bairro || null,
-        cidade || null,
-        uf || null,
-        cep || null,
-        numero || null,
-        telefone || null,
-        celular || null,
-        email || null,
-        datahoracadastrofo || new Date(),
-        observacoes || null,
-        ativo
-      ]
-    )
+    `
+
+    const values = [
+      fornecedor,
+      cnpj || null,
+      ie || null,
+      endereco || null,
+      bairro || null,
+      cidade || null,
+      uf || null,
+      cep || null,
+      numero || null,
+      telefone || null,
+      celular || null,
+      email || null,
+      datahoracadastrofo ? new Date(datahoracadastrofo) : new Date(),
+      observacoes || null,
+      ativo
+    ]
+
+    const { rows } = await pool.query(sql, values)
 
     res.status(201).json({
       sucesso: true,
-      controle: rows[0].controle,
-      fornecedor
+      controle: rows[0].controle
     })
 
   } catch (err) {
-    console.error('❌ Erro ao inserir fornecedor:', err.message)
-    res.status(500).json({ erro: 'Erro ao inserir fornecedor' })
+    console.error('❌ Erro ao inserir fornecedor:', err)
+    res.status(500).json({
+      erro: 'Erro ao inserir fornecedor',
+      detalhe: err.message
+    })
   }
 })
+
 
 
 app.get('/fornecedores', async (req, res) => {
