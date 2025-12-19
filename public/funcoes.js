@@ -62,7 +62,7 @@ function validarLogin() {
 function iniciarSistema() {
   document.getElementById('formLogin').style.display = 'none';  
   pessoa()
-  buscarEmitente()
+  //buscarEmitente()
 }
 
 function logout() {
