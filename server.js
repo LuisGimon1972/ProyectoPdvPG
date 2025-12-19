@@ -1439,7 +1439,9 @@ app.post('/fornecedores', async (req, res) => {
       telefone || null,
       celular || null,
       email || null,
-      datahoracadastrofo || new Date(),
+      datahoracadastrofo
+      ? new Date(datahoracadastrofo)
+      : new Date(),
       observacoes || null,
       ativo
     ];
