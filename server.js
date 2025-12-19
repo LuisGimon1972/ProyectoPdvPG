@@ -1385,32 +1385,35 @@ app.delete('/funcionarios/:controle', async (req, res) => {
 // Rota para fornecedores**
 
 app.post('/fornecedores', async (req, res) => {
-  const {
-    fornecedor,
-    cnpj,
-    ie,
-    endereco,
-    bairro,
-    cidade,
-    uf,
-    cep,
-    numero,
-    telefone,
-    celular,
-    email,
-    datahoracadastrofo,
-    observacoes,
-    ativo
-  } = req.body
-
-  // ✅ Validações corretas
-  if (!fornecedor || typeof ativo !== 'boolean') {
-    return res.status(400).json({
-      erro: 'Campos obrigatórios: fornecedor e ativo (boolean)'
-    })
-  }
-
   try {
+    let {
+      fornecedor,
+      cnpj,
+      ie,
+      endereco,
+      bairro,
+      cidade,
+      uf,
+      cep,
+      numero,
+      telefone,
+      celular,
+      email,
+      datahoracadastrofo,
+      observacoes,
+      ativo
+    } = req.body;
+
+    // 🔴 Validação real
+    if (!fornecedor || !ativo) {
+      return res.status(400).json({
+        erro: 'Campos obrigatórios: fornecedor e ativo'
+      });
+    }
+
+    // 🔧 Normaliza ATIVO (garante SIM ou NÃO)
+    ativo = ativo === 'SIM' ? 'SIM' : 'NÃO';
+
     const sql = `
       INSERT INTO fornecedores (
         fornecedor, cnpj, ie, endereco, bairro, cidade, uf, cep, numero,
@@ -1421,7 +1424,7 @@ app.post('/fornecedores', async (req, res) => {
         $10,$11,$12,$13,$14,$15
       )
       RETURNING controle
-    `
+    `;
 
     const values = [
       fornecedor,
@@ -1436,26 +1439,28 @@ app.post('/fornecedores', async (req, res) => {
       telefone || null,
       celular || null,
       email || null,
-      datahoracadastrofo ? new Date(datahoracadastrofo) : new Date(),
+      datahoracadastrofo || new Date(),
       observacoes || null,
       ativo
-    ]
+    ];
 
-    const { rows } = await pool.query(sql, values)
+    const { rows } = await pool.query(sql, values);
 
     res.status(201).json({
       sucesso: true,
-      controle: rows[0].controle
-    })
+      controle: rows[0].controle,
+      fornecedor
+    });
 
   } catch (err) {
-    console.error('❌ Erro ao inserir fornecedor:', err)
+    console.error('❌ Erro ao cadastrar fornecedor:', err.message);
     res.status(500).json({
-      erro: 'Erro ao inserir fornecedor',
+      erro: 'Erro ao cadastrar fornecedor',
       detalhe: err.message
-    })
+    });
   }
-})
+});
+
 
 
 
