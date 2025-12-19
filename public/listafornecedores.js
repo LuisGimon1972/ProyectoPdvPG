@@ -33,10 +33,11 @@ function renderizarPaginaFornecedores() {
   if (pagina.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7">Nenhum fornecedor cadastrado.</td></tr>';
   } else {
+    //<td style ="text-align: center;">${fornecedor.cnpj}</td>
     pagina.forEach(fornecedor => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style ="text-align: center;">${fornecedor.cnpj}</td>
+        <td style ="text-align: center;">${fornecedor.controle}</td>
         <td>${fornecedor.ie}</td>
         <td>${fornecedor.fornecedor}</td>
         <td>${fornecedor.email || ''}</td>
