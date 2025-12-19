@@ -1385,73 +1385,50 @@ app.delete('/funcionarios/:controle', async (req, res) => {
 // Rota para fornecedores**
 
 app.post('/fornecedores', async (req, res) => {
+  const {
+    fornecedor, cnpj, ie, endereco, bairro, cidade, uf, cep, numero,
+    telefone, celular, email, observacoes, ativo
+  } = req.body;
+
+  if (!fornecedor || !ativo) {
+    return res.status(400).json({
+      erro: 'Campos obrigatórios: fornecedor e ativo'
+    });
+  }
+
   try {
-    let {
-      fornecedor,
-      cnpj,
-      ie,
-      endereco,
-      bairro,
-      cidade,
-      uf,
-      cep,
-      numero,
-      telefone,
-      celular,
-      email,
-      datahoracadastrofo,
-      observacoes,
-      ativo
-    } = req.body;
-
-    // 🔴 Validação real
-    if (!fornecedor || !ativo) {
-      return res.status(400).json({
-        erro: 'Campos obrigatórios: fornecedor e ativo'
-      });
-    }
-
-    // 🔧 Normaliza ATIVO (garante SIM ou NÃO)
-    ativo = ativo === 'SIM' ? 'SIM' : 'NÃO';
-
-    const sql = `
+    const { rows } = await pool.query(
+      `
       INSERT INTO fornecedores (
         fornecedor, cnpj, ie, endereco, bairro, cidade, uf, cep, numero,
         telefone, celular, email, datahoracadastrofo, observacoes, ativo
-      )
-      VALUES (
+      ) VALUES (
         $1,$2,$3,$4,$5,$6,$7,$8,$9,
-        $10,$11,$12,$13,$14,$15
+        $10,$11,$12, NOW(), $13,$14
       )
       RETURNING controle
-    `;
-
-    const values = [
-      fornecedor,
-      cnpj || null,
-      ie || null,
-      endereco || null,
-      bairro || null,
-      cidade || null,
-      uf || null,
-      cep || null,
-      numero || null,
-      telefone || null,
-      celular || null,
-      email || null,
-      datahoracadastrofo
-      ? new Date(datahoracadastrofo)
-      : new Date(),
-      observacoes || null,
-      ativo
-    ];
-
-    const { rows } = await pool.query(sql, values);
+      `,
+      [
+        fornecedor,
+        cnpj || null,
+        ie || null,
+        endereco || null,
+        bairro || null,
+        cidade || null,
+        uf || null,
+        cep || null,
+        numero || null,
+        telefone || null,
+        celular || null,
+        email || null,
+        observacoes || null,
+        ativo
+      ]
+    );
 
     res.status(201).json({
       sucesso: true,
-      controle: rows[0].controle,
-      fornecedor
+      controle: rows[0].controle
     });
 
   } catch (err) {
@@ -1462,8 +1439,6 @@ app.post('/fornecedores', async (req, res) => {
     });
   }
 });
-
-
 
 
 app.get('/fornecedores', async (req, res) => {
