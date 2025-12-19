@@ -48,8 +48,8 @@ function verificare() {
     const telefone = getInputValue('telefoneemite');
     const celular = getInputValue('celulari');
     const datanascimento = document.getElementById('datanascimentoe').value;
-    const hoje = new Date();    
-    const datahoracadastro = hoje.toLocaleDateString("pt-BR");
+    const hoje = new Date();
+    const datahoracadastro = hoje.toISOString(); // ✅ correto
     const naturalidade = getInputValue('naturalidadee');
     const nacionalidade = getInputValue('nacionalidadee');            
     const rg = getInputValue('rge');      
