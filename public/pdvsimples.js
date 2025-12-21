@@ -405,12 +405,14 @@ function finalizarVenda() {
     
   let vendaImpressa = false
   if (vendaImpressa) return
+  else{
   vendaImpressa = true
   imprimirVenda({
     usuario: usuariologadoF,
     cliente: nomeclien,
     total: total
   })
+  }
 
 
   limparVenda();
