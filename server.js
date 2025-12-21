@@ -2409,7 +2409,10 @@ process.on('SIGINT', () => {
 });
 
 app.listen(PORT, async () => {
-  console.log(`🚀 Servidor iniciado em http://localhost:${PORT}`)
-  await carregarBanco(pool) // roda banco.sql se existir
-  await inserirFuncionarioPadrao(pool)
-})
+  const ambiente = process.env.NODE_ENV || 'local';
+
+  console.log(`🚀 Servidor rodando (${ambiente}) na porta ${PORT}`);
+
+  await carregarBanco(pool);
+  await inserirFuncionarioPadrao(pool);
+});
