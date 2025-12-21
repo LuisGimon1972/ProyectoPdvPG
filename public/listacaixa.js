@@ -101,18 +101,27 @@ function renderizarPaginaCaixa() {
 
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="text-align: center;">${mov.controle}</td>
-        <td>${mov.funcionario}</td>
-        <td>${mov.cliente.toUpperCase()}</td>
-        <td>${mov.fornecedor.toUpperCase()}</td>
-        <td>${mov.descricao.toUpperCase()}</td>
-        <td>${mov.especies.toUpperCase()}</td>
-        <td style="text-align: right;">${entrada.toFixed(2)}</td>
-        <td style="text-align: right;">${saida.toFixed(2)}</td>
-        <td style="text-align: center;">${formatarDataBRL(mov.datacadastro)}</td>
-        <td class="coluna-botoes">
+        <td style="text-align:center; border:1px solid #ccc; background:#f9f9f9;">
+        ${mov.controle}
+        </td>
+          <td style="border:1px solid #ccc;">${mov.funcionario}</td>
+          <td style="border:1px solid #ccc;">${mov.cliente.toUpperCase()}</td>
+          <td style="border:1px solid #ccc;">${mov.fornecedor.toUpperCase()}</td>
+          <td style="border:1px solid #ccc;">${mov.descricao.toUpperCase()}</td>
+          <td style="border:1px solid #ccc;">${mov.especies.toUpperCase()}</td>
+          <td style="text-align:right; border:1px solid #ccc;">
+          ${entrada.toFixed(2)}
+          </td>
+          <td style="text-align:right; border:1px solid #ccc;">
+          ${saida.toFixed(2)}
+          </td>
+          <td style="text-align:center; border:1px solid #ccc;">
+          ${formatarDataBRL(mov.datacadastro)}
+          </td>
+          <td style="border:1px solid #ccc; text-align:center;">
           <button class="btnExcluirx" data-controle="${mov.controle}">🗑️</button>
         </td>
+
       `;
       tbody.appendChild(linha);
     });

@@ -66,20 +66,20 @@ function renderizarPaginaReceber() {
 
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="text-align: center;">${r.controle}</td>
-        <td>${r.funcionario}</td>
-        <td>${r.nomecliente}</td>
-        <td style="text-align: right;">R$ ${parseFloat(r.valororiginal).toFixed(2)}</td>
-        <td style="text-align: right;">R$ ${parseFloat(r.valorpago).toFixed(2)}</td>
-        <td style="text-align: center;">${r.numeroparcela}</td>
-        <td style="text-align: center;">${r.totalparcelas}</td>
-        <td style="text-align: center;">${formatarDataBRL(r.datacadastro)}</td>
-        <td style="text-align: center;">${formatarDataBRL(r.datavencimento)}</td>
-        <td style="text-align: center;">${r.datapagamento ? formatarDataBRL(r.datapagamento) : 'PENDIENTE'}</td>
-        <td style="text-align: right;">${parseFloat(r.multa).toFixed(2)}</td>
-        <td style="text-align: right;">${parseFloat(r.juros).toFixed(2)}</td>
-        <td style="text-align: center;">${r.status}</td>
-        <td style="text-align:center;">
+        <td style="border:1px solid #ccc;text-align: center;">${r.controle}</td>
+        <td style="border:1px solid #ccc;">${r.funcionario}</td>
+        <td style="border:1px solid #ccc;">${r.nomecliente}</td>
+        <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(r.valororiginal).toFixed(2)}</td>
+        <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(r.valorpago).toFixed(2)}</td>
+        <td style="border:1px solid #ccc;text-align: center;">${r.numeroparcela}</td>
+        <td style="border:1px solid #ccc;text-align: center;">${r.totalparcelas}</td>
+        <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(r.datacadastro)}</td>
+        <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(r.datavencimento)}</td>
+        <td style="border:1px solid #ccc;text-align: center;">${r.datapagamento ? formatarDataBRL(r.datapagamento) : 'PENDIENTE'}</td>
+        <td style="border:1px solid #ccc;text-align: right;">${parseFloat(r.multa).toFixed(2)}</td>
+        <td style="border:1px solid #ccc;text-align: right;">${parseFloat(r.juros).toFixed(2)}</td>
+        <td style="border:1px solid #ccc;text-align: center;">${r.status}</td>
+        <td style="border:1px solid #ccc;text-align:center;">
           <button class="btnExcluirReceber" data-controle="${r.controle}">🗑️</button>
         </td>
       `;

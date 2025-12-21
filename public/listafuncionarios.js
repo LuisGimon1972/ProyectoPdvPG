@@ -38,13 +38,13 @@ function renderizarPaginaFuncionarios() {
     pagina.forEach(funcionario => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="text-align: center;">${funcionario.cpff}</td>
-        <td>${funcionario.rgf}</td>
-        <td>${funcionario.funcionariof}</td>
-        <td>${funcionario.funcaof ||''}</td>
-        <td>${funcionario.e_mailf ||''}</td>
-        <td>${funcionario.telefonef ||''}</td>
-        <td>
+        <td style="border:1px solid #ccc;text-align: center;">${funcionario.cpff}</td>
+        <td style="border:1px solid #ccc;">${funcionario.rgf}</td>
+        <td style="border:1px solid #ccc;">${funcionario.funcionariof}</td>
+        <td style="border:1px solid #ccc;">${funcionario.funcaof ||''}</td>
+        <td style="border:1px solid #ccc;">${funcionario.e_mailf ||''}</td>
+        <td style="border:1px solid #ccc;">${funcionario.telefonef ||''}</td>
+        <td style="border:1px solid #ccc;">
           <button class="btnEditarf" data-controle="${funcionario.controle}">✏️</button>
           <button class="btnExcluirf" data-controle="${funcionario.controle}">🗑️</button>
           <button class="btnVerf" data-controle="${funcionario.controle}">👁️</button>

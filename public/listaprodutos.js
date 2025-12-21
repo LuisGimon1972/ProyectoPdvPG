@@ -40,13 +40,13 @@ function renderizarPaginaProdutos() {
     pagina.forEach(produto => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="text-align: center;">${produto.controle}</td>
-        <td>${produto.produto}</td>
-        <td>${produto.codbarras}</td>                
-        <td style="text-align: right;">${parseFloat(produto.quantidade).toFixed(2)}</td>
-        <td style="text-align: right;">R$ ${parseFloat(produto.precocusto).toFixed(2)}</td>
-        <td style="text-align: right;">R$ ${parseFloat(produto.precovenda).toFixed(2)}</td>        
-        <td>
+        <td style="border:1px solid #ccc;text-align: center;">${produto.controle}</td>
+        <td style="border:1px solid #ccc;">${produto.produto}</td>
+        <td style="border:1px solid #ccc;">${produto.codbarras}</td>                
+        <td style="border:1px solid #ccc;text-align: right;">${parseFloat(produto.quantidade).toFixed(2)}</td>
+        <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(produto.precocusto).toFixed(2)}</td>
+        <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(produto.precovenda).toFixed(2)}</td>        
+        <td style="border:1px solid #ccc;">
           <button class="btnEditar"  data-controle="${produto.controle}">✏️</button>
           <button class="btnExcluir" data-controle="${produto.controle}">🗑️</button>
           <button class="btnVer" data-controle="${produto.controle}">👁️</button>

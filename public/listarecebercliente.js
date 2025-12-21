@@ -85,20 +85,20 @@ function renderizarTabelaComPaginacao() {
     const checked = parcelasSelecionadas.has(controle) ? 'checked' : '';
     const linha = document.createElement('tr');
     linha.innerHTML = `
-      <td><input type="checkbox" class="checkParcela" value="${controle}" data-valor="${valorAberto.toFixed(2)}" ${checked}></td>
-      <td style="text-align: center;">${controle}</td>
-      <td>${parcela.funcionario}</td>
-      <td>${parcela.nomecliente}</td>
-      <td style="text-align: right;">R$ ${parseFloat(parcela.valororiginal).toFixed(2)}</td>
-      <td style="text-align: right;">R$ ${parseFloat(parcela.valorpago).toFixed(2)}</td>
-      <td style="text-align: center;">${parcela.numeroparcela}</td>
-      <td style="text-align: center;">${parcela.totalparcelas}</td>
-      <td style="text-align: center;">${formatarDataBRL(parcela.datacadastro)}</td>
-      <td style="text-align: center;">${formatarDataBRL(parcela.datavencimento)}</td>      
-      <td style="text-align: right;">R$ ${parseFloat(parcela.multa).toFixed(2)}</td>
-      <td style="text-align: right;">R$ ${parseFloat(parcela.juros).toFixed(2)}</td>
-      <td style="text-align: center;">${parcela.status}</td>
-      <td><button class="btnExcluirrec" data-controle="${controle}">🗑️</button></td>
+      <td style="border:1px solid #ccc;;text-align: center"><input type="checkbox" class="checkParcela" value="${controle}" data-valor="${valorAberto.toFixed(2)}" ${checked}></td>
+      <td style="border:1px solid #ccc;text-align: center;">${controle}</td>
+      <td style="border:1px solid #ccc;">${parcela.funcionario}</td>
+      <td style="border:1px solid #ccc;">${parcela.nomecliente}</td>
+      <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(parcela.valororiginal).toFixed(2)}</td>
+      <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(parcela.valorpago).toFixed(2)}</td>
+      <td style="border:1px solid #ccc;text-align: center;">${parcela.numeroparcela}</td>
+      <td style="border:1px solid #ccc;text-align: center;">${parcela.totalparcelas}</td>
+      <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(parcela.datacadastro)}</td>
+      <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(parcela.datavencimento)}</td>      
+      <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(parcela.multa).toFixed(2)}</td>
+      <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(parcela.juros).toFixed(2)}</td>
+      <td style="border:1px solid #ccc;text-align: center;">${parcela.status}</td>
+      <td style="border:1px solid #ccc;"><button class="btnExcluirrec" data-controle="${controle}">🗑️</button></td>
     `;
     tbody.appendChild(linha);
   });

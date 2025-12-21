@@ -78,13 +78,13 @@ function renderizarPaginaClientes() {
     pagina.forEach(cliente => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="text-align: center;">${cliente.cpf || ''}</td>
-        <td style="text-align: center;">${cliente.cnpj || ''}</td>
-        <td>${cliente.cliente}</td>
-        <td>${cliente.e_mail || ''}</td>
-        <td>${cliente.telefone || ''}</td>
-        <td>${cliente.cidade || ''}</td>
-        <td>
+        <td style="border:1px solid #ccc;text-align: center;">${cliente.cpf || ''}</td>
+        <td style="border:1px solid #ccc;text-align: center;">${cliente.cnpj || ''}</td>
+        <td style="border:1px solid #ccc;">${cliente.cliente}</td>
+        <td style="border:1px solid #ccc;">${cliente.e_mail || ''}</td>
+        <td style="border:1px solid #ccc;">${cliente.telefone || ''}</td>
+        <td style="border:1px solid #ccc;">${cliente.cidade || ''}</td>
+        <td style="border:1px solid #ccc;">
           <button class="btnEditar" data-controle="${cliente.controle}">✏️</button>
           <button class="btnExcluir" data-controle="${cliente.controle}">🗑️</button>
           <button class="btnVer" data-controle="${cliente.controle}">👁️</button>

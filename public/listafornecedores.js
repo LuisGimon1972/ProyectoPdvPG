@@ -36,13 +36,13 @@ function renderizarPaginaFornecedores() {
     pagina.forEach(fornecedor => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style ="text-align: center;">${fornecedor.cnpj}</td>
-        <td>${fornecedor.ie}</td>
-        <td>${fornecedor.fornecedor}</td>
-        <td>${fornecedor.email || ''}</td>
-        <td>${fornecedor.telefone || ''}</td>
-        <td>${fornecedor.celular || ''}</td>
-        <td>
+        <td style ="border:1px solid #ccc;text-align: center;">${fornecedor.cnpj}</td>
+        <td style="border:1px solid #ccc;">${fornecedor.ie}</td>
+        <td style="border:1px solid #ccc;">${fornecedor.fornecedor}</td>
+        <td style="border:1px solid #ccc;">${fornecedor.email || ''}</td>
+        <td style="border:1px solid #ccc;">${fornecedor.telefone || ''}</td>
+        <td style="border:1px solid #ccc;">${fornecedor.celular || ''}</td>
+        <td style="border:1px solid #ccc;">
           <button class="btnEditarfo" data-controle="${fornecedor.controle}">✏️</button>
           <button class="btnExcluirfo" data-controle="${fornecedor.controle}">🗑️</button>
           <button class="btnVerfo" data-controle="${fornecedor.controle}">👁️</button>
