@@ -1,5 +1,5 @@
 function VerCliente(controle) {
-    document.getElementById('formPainel').style.display = 'block';           
+    document.getElementById('formPainel').style.display = 'none';           
     const msg = window.document.getElementById('tituli');
     msg.innerHTML = `Consulta de dados do cliente`;  
     fetch(`/clientes/${controle}`)

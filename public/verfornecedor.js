@@ -1,6 +1,6 @@
 function VisualizarFornecedor(controle) {
     limparNome();
-    document.getElementById('formPainel').style.display = 'block';           
+    document.getElementById('formPainel').style.display = 'none';           
     const msg = window.document.getElementById('titulifo');
     msg.innerHTML = `Ver dados do Fornecedor`;       
     fetch(`/fornecedores/${controle}`)

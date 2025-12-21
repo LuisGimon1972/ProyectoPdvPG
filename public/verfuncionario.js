@@ -1,6 +1,6 @@
 function VisualizarFuncionario(controle) {
     limparNome();
-    document.getElementById('formPainel').style.display = 'block';           
+    document.getElementById('formPainel').style.display = 'none';           
     const msg = document.getElementById('titulofun');
     msg.innerHTML = `Visualização de dados do funcionário`;
     fetch(`/funcionarios/${controle}`)
