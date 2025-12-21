@@ -810,7 +810,8 @@ app.post('/produtos', async (req, res) => {
   const {
     produto, codbarras, fornecedor, grupoestoque, subgrupoestoque, marca,
     precocusto, perclucro, precovenda, precorevenda, precoatacado,
-    quantidade, quantidademin, quantidademax, datahoracadastro, ativop, fracionado, aplicacao, duracao
+    quantidade, quantidademin, quantidademax, datahoracadastro,
+    ativop, fracionado, aplicacao, duracao
   } = req.body;
 
   try {
@@ -818,27 +819,59 @@ app.post('/produtos', async (req, res) => {
       INSERT INTO produtos (
         produto, codbarras, fornecedor, grupoestoque, subgrupoestoque, marca,
         precocusto, perclucro, precovenda, precorevenda, precoatacado,
-        quantidade, quantidademin, quantidademax, datahoracadastro, ativop, fracionado, aplicacao, duracao
+        quantidade, quantidademin, quantidademax, datahoracadastro,
+        ativop, fracionado, aplicacao, duracao
       )
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
+      VALUES (
+        $1,$2,$3,$4,$5,$6,
+        $7,$8,$9,$10,$11,
+        $12,$13,$14,$15,
+        $16,$17,$18,$19
+      )
       RETURNING controle
     `;
 
-    const values = [
-      produto, codbarras, fornecedor, grupoestoque, subgrupoestoque, marca,
-      precocusto, perclucro, precovenda, precorevenda, precoatacado,
-      quantidade, quantidademin, quantidademax, datahoracadastro, ativop, fracionado, aplicacao, duracao
+    const valores = [
+      produto || null,
+      codbarras || null,
+      fornecedor || null,
+      grupoestoque || null,
+      subgrupoestoque || null,
+      marca || null,
+      precocusto === '' ? null : precocusto,
+      perclucro === '' ? null : perclucro,
+      precovenda === '' ? null : precovenda,
+      precorevenda === '' ? null : precorevenda,
+      precoatacado === '' ? null : precoatacado,
+      quantidade === '' ? null : quantidade,
+      quantidademin === '' ? null : quantidademin,
+      quantidademax === '' ? null : quantidademax,
+      datahoracadastro || new Date(),
+      ativop || 'SIM',
+      fracionado || 'NAO',
+      aplicacao || null,
+      duracao || null
     ];
 
-    const { rows } = await pool.query(sql, values);
-    res.status(201).json({ sucesso: true, id: rows[0].controle });
-  } catch (err) {
-    console.error('Erro ao inserir produto:', err.message);
-    res.status(500).json({ erro: err.message });
+    const { rows } = await pool.query(sql, valores);
+
+    res.status(201).json({
+      sucesso: true,
+      controle: rows[0].controle
+    });
+
+  } catch (erro) {
+
+    if (erro.code === '23505') {
+      return res.status(409).json({
+        erro: 'Produto já cadastrado'
+      });
+    }
+
+    console.error('Erro ao inserir produto:', erro.message);
+    res.status(500).json({ erro: erro.message });
   }
 });
-
-
 
 app.get('/produtos', async (req, res) => {
   try {
