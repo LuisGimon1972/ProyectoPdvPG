@@ -14,12 +14,12 @@ app.use(express.json());
 
 // ---------- CONFIGURAÇÃO POSTGRES ----------
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'bancopdv', // ✅ banco deve EXISTIR
-  password: '8451',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL
+    ? { rejectUnauthorized: false }
+    : false
 });
+
 
 const fs = require('fs')
 
@@ -69,9 +69,6 @@ app.use((err, req, res, next) => {
 
 // ---------- START SERVER ----------
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 API rodando em http://localhost:${PORT}`);
-});
 
 // ---------- EXPORTS ----------
 module.exports = { app, pool };
@@ -281,39 +278,108 @@ app.delete('/usuarios/:id', async (req, res) => {
 
 // ROTAS EMITENTE
 app.post('/emitente', async (req, res) => {
-  const dados = req.body;
+  const {
+    emitente,
+    cidade,
+    cep,
+    endereco,
+    bairro,
+    numero,
+    pais,
+    uf,
+    ativo,
+    telefone,
+    celular,
+    datanascimento,
+    datahoracadastro,
+    naturalidade,
+    nacionalidade,
+    rg,
+    sexo,
+    estadocivil,
+    cpf,
+    cnpj,
+    tipocliente,
+    e_mail,
+    ie,
+    im,
+    suframa,
+    crt,
+    segmento,
+    faixa,
+    fantasia,
+    tipodebusca
+  } = req.body
 
-  const sql = `
-    INSERT INTO emitente (
-      emitente, cidade, cep, endereco, bairro, numero, pais, uf, ativo,
-      telefone, celular, datanascimento, datahoracadastro, naturalidade,
-      nacionalidade, rg, sexo, estadocivil, cpf, cnpj, tipocliente,
-      e_mail, ie, im, suframa, crt, segmento, faixa, fantasia, tipodebusca
-    ) VALUES (
-      $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
-      $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
-      $21,$22,$23,$24,$25,$26,$27,$28,$29,$30
-    )
-    RETURNING controle
-  `;
-
-  const params = [
-    dados.emitente, dados.cidade, dados.cep, dados.endereco, dados.bairro, dados.numero,
-    dados.pais, dados.uf, dados.ativo, dados.telefone, dados.celular,
-    dados.datanascimento, dados.datahoracadastro, dados.naturalidade, dados.nacionalidade,
-    dados.rg, dados.sexo, dados.estadocivil, dados.cpf, dados.cnpj,
-    dados.tipocliente, dados.e_mail, dados.ie, dados.im, dados.suframa,
-    dados.crt, dados.segmento, dados.faixa, dados.fantasia, dados.tipodebusca
-  ];
+  if (!emitente || !ativo) {
+    return res.status(400).json({
+      erro: 'Campos obrigatórios: emitente e ativo'
+    })
+  }
 
   try {
-    const result = await pool.query(sql, params);
-    res.status(201).json({ controle: result.rows[0].controle, ...dados });
+    const { rows } = await pool.query(
+      `
+      INSERT INTO emitente (
+        emitente, cidade, cep, endereco, bairro, numero, pais, uf, ativo,
+        telefone, celular, datanascimento, datahoracadastro, naturalidade,
+        nacionalidade, rg, sexo, estadocivil, cpf, cnpj, tipocliente,
+        e_mail, ie, im, suframa, crt, segmento, faixa, fantasia, tipodebusca
+      ) VALUES (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,
+        $10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
+        $21,$22,$23,$24,$25,$26,$27,$28,$29,$30
+      )
+      RETURNING controle
+      `,
+      [
+        emitente,
+        cidade || null,
+        cep || null,
+        endereco || null,
+        bairro || null,
+        numero || null,
+        pais || null,
+        uf || null,
+        ativo,
+        telefone || null,
+        celular || null,
+        datanascimento || null,
+        datahoracadastro || new Date(),
+        naturalidade || null,
+        nacionalidade || null,
+        rg || null,
+        sexo || null,
+        estadocivil || null,
+        cpf || null,
+        cnpj || null,
+        tipocliente || null,
+        e_mail || null,
+        ie || null,
+        im || null,
+        suframa || null,
+        crt || null,
+        segmento || null,
+        faixa || null,
+        fantasia || null,
+        tipodebusca || null
+      ]
+    )
+
+    res.status(201).json({
+      sucesso: true,
+      controle: rows[0].controle
+    })
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Erro ao inserir emitente.' });
+    console.error('❌ Erro ao inserir emitente:', err)
+    res.status(500).json({
+      erro: 'Erro ao inserir emitente',
+      detalhe: err.message
+    })
   }
-});
+})
+
 
 
 // Listar todos emitentes
@@ -772,7 +838,7 @@ app.get('/produtos', async (req, res) => {
       SELECT *
       FROM public.produtos
       WHERE aplicacao = $1
-      ORDER BY produto
+      ORDER BY controle
       `,
       ['PRODUTOS']
     )
@@ -880,18 +946,43 @@ app.get('/produtos/:controle', async (req, res) => {
 })
 
 app.put('/produtos/:controle', async (req, res) => {
-  const {
-    produto, codbarras, fornecedor, grupoestoque, subgrupoestoque, marca,
-    precocusto, perclucro, precovenda, precorevenda, precoatacado,
-    quantidade, quantidademin, quantidademax, ativop, fracionado, aplicacao, duracao
-  } = req.body
-
   const { controle } = req.params
 
+  const {
+    produto,
+    codbarras,
+    fornecedor,
+    grupoestoque,
+    subgrupoestoque,
+    marca,
+    precocusto,
+    perclucro,
+    precovenda,
+    precorevenda,
+    precoatacado,
+    quantidade,
+    quantidademin,
+    quantidademax,
+    ativop,
+    fracionado,
+    aplicacao,
+    duracao
+  } = req.body
+
+  if (!controle) {
+    return res.status(400).json({ erro: 'Controle não informado' })
+  }
+
+  if (!produto || !precovenda || !ativop || !aplicacao) {
+    return res.status(400).json({
+      erro: 'Campos obrigatórios: produto, precovenda, ativop, aplicacao'
+    })
+  }
+
   try {
-    const { rowCount } = await pool.query(
+    const result = await pool.query(
       `
-      UPDATE public.produtos SET
+      UPDATE produtos SET
         produto = $1,
         codbarras = $2,
         fornecedor = $3,
@@ -913,23 +1004,47 @@ app.put('/produtos/:controle', async (req, res) => {
       WHERE controle = $19
       `,
       [
-        produto, codbarras, fornecedor, grupoestoque, subgrupoestoque, marca,
-        precocusto, perclucro, precovenda, precorevenda, precoatacado,
-        quantidade, quantidademin, quantidademax, ativop, fracionado, aplicacao, duracao,
+        produto,
+        codbarras || null,
+        fornecedor || null,
+        grupoestoque || null,
+        subgrupoestoque || null,
+        marca || null,
+        precocusto || 0,
+        perclucro || 0,
+        precovenda,
+        precorevenda || null,
+        precoatacado || null,
+        quantidade || 0,
+        quantidademin || 0,
+        quantidademax || 0,
+        ativop,
+        fracionado || 'NÃO',
+        aplicacao,
+        duracao || 0,
         controle
       ]
     )
 
-    if (rowCount === 0) {
-      return res.status(404).json({ erro: 'Produto não encontrado.' })
+    if (result.rowCount === 0) {
+      return res.status(404).json({ erro: 'Produto não encontrado' })
     }
 
-    res.json({ atualizado: true, controle })
+    res.json({
+      sucesso: true,
+      mensagem: 'Produto atualizado com sucesso',
+      controle
+    })
+
   } catch (err) {
-    console.error('❌ Erro ao atualizar produto:', err.message)
-    res.status(500).json({ erro: 'Erro ao atualizar produto' })
+    console.error('❌ Erro ao atualizar produto:', err)
+    res.status(500).json({
+      erro: 'Erro ao atualizar produto',
+      detalhe: err.message
+    })
   }
 })
+
 
 app.delete('/produtos/:controle', async (req, res) => {
   const { controle } = req.params
@@ -1387,24 +1502,24 @@ app.delete('/funcionarios/:controle', async (req, res) => {
 app.post('/fornecedores', async (req, res) => {
   const {
     fornecedor, cnpj, ie, endereco, bairro, cidade, uf, cep, numero,
-    telefone, celular, email, datahoracadastrofo, observacoes, ativo
-  } = req.body
+    telefone, celular, email, observacoes, ativo
+  } = req.body;
 
   if (!fornecedor || !ativo) {
     return res.status(400).json({
       erro: 'Campos obrigatórios: fornecedor e ativo'
-    })
+    });
   }
 
   try {
     const { rows } = await pool.query(
       `
-      INSERT INTO public.fornecedores (
+      INSERT INTO fornecedores (
         fornecedor, cnpj, ie, endereco, bairro, cidade, uf, cep, numero,
         telefone, celular, email, datahoracadastrofo, observacoes, ativo
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9,
-        $10, $11, $12, $13, $14, $15
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,
+        $10,$11,$12, NOW(), $13,$14
       )
       RETURNING controle
       `,
@@ -1421,23 +1536,24 @@ app.post('/fornecedores', async (req, res) => {
         telefone || null,
         celular || null,
         email || null,
-        datahoracadastrofo || new Date(),
         observacoes || null,
         ativo
       ]
-    )
+    );
 
     res.status(201).json({
       sucesso: true,
-      controle: rows[0].controle,
-      fornecedor
-    })
+      controle: rows[0].controle
+    });
 
   } catch (err) {
-    console.error('❌ Erro ao inserir fornecedor:', err.message)
-    res.status(500).json({ erro: 'Erro ao inserir fornecedor' })
+    console.error('❌ Erro ao cadastrar fornecedor:', err.message);
+    res.status(500).json({
+      erro: 'Erro ao cadastrar fornecedor',
+      detalhe: err.message
+    });
   }
-})
+});
 
 
 app.get('/fornecedores', async (req, res) => {
@@ -1485,14 +1601,14 @@ app.put('/fornecedores/:controle', async (req, res) => {
     telefone, celular, email, datahoracadastrofo, observacoes, ativo
   } = req.body
 
-  if (!fornecedor || !ativo) {
+  if (!fornecedor || ativo === undefined) {
     return res.status(400).json({
       erro: 'Campos obrigatórios: fornecedor e ativo.'
     })
   }
 
   try {
-    const result = await pool.query(
+    const { rows, rowCount } = await pool.query(
       `
       UPDATE public.fornecedores SET
         fornecedor = $1,
@@ -1526,27 +1642,61 @@ app.put('/fornecedores/:controle', async (req, res) => {
         telefone || null,
         celular || null,
         email || null,
-        datahoracadastrofo || new Date(),
+        normalizarData(datahoracadastrofo) ?? new Date().toISOString(),
         observacoes || null,
         ativo,
         controle
       ]
     )
 
-    if (result.rowCount === 0) {
+    if (rowCount === 0) {
       return res.status(404).json({ erro: 'Fornecedor não encontrado.' })
     }
 
     res.status(200).json({
       atualizado: true,
-      controle: result.rows[0].controle
+      controle: rows[0].controle
     })
 
   } catch (err) {
     console.error('❌ Erro ao atualizar fornecedor:', err.message)
-    res.status(500).json({ erro: 'Erro ao atualizar fornecedor' })
+    res.status(500).json({
+      erro: 'Erro ao atualizar fornecedor',
+      detalhe: err.message
+    })
   }
 })
+
+function normalizarData(valor) {
+  if (!valor) return null
+  
+  if (valor instanceof Date) {
+    return valor.toISOString()
+  }
+
+  if (typeof valor === 'string') {
+
+    if (valor.includes(',') || valor.includes('-') && valor.includes(':')) {
+      return new Date().toISOString()
+    }
+
+    if (valor.includes('T')) {
+      return valor
+    }
+
+    if (valor.includes('/')) {
+      const [dia, mes, ano] = valor.split('/')
+      return `${ano}-${mes}-${dia}T00:00:00`
+    }
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      return `${valor}T00:00:00`
+    }
+  }
+
+  return new Date().toISOString()
+}
+
 
 
 app.delete('/fornecedores/:controle', async (req, res) => {
@@ -2255,8 +2405,21 @@ process.on('SIGINT', () => {
   pool.end().then(() => process.exit(0));
 });
 
-app.listen(PORT, async () => {
-  console.log(`🚀 Servidor iniciado em http://localhost:${PORT}`)
-  await carregarBanco(pool) // roda banco.sql se existir
+/*app.listen(PORT, async () => {
+  const ambiente = process.env.NODE_ENV || 'local';
+
+  console.log(`🚀 Servidor rodando (${ambiente}) na porta ${PORT}`);
+
+  await carregarBanco(pool);
+  await inserirFuncionarioPadrao(pool);
+});*/
+
+(async () => {
+  await carregarBanco(pool)
   await inserirFuncionarioPadrao(pool)
-})
+
+  app.listen(PORT, () => {
+    const ambiente = process.env.NODE_ENV || 'local';
+    console.log(`🚀 Servidor rodando (${ambiente}) na porta ${PORT}`);
+  })
+})();
