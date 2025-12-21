@@ -504,59 +504,68 @@ app.post('/clientes', async (req, res) => {
     cliente, cidade, cep, endereco, bairro, numero, pais, uf, ativo,
     telefone, celular, datanascimento, datahoracadastro,
     naturalidade, nacionalidade, rg, sexo, estadocivil,
-    cpf, cnpj, tipocliente, e_mail, ie, im, fantasia, limite, objetos
+    cpf, cnpj, tipocliente, e_mail, ie, im, fantasia, limite
   } = req.body;
 
   try {
-    // Inserir cliente e retornar o id
-    const insertClienteSql = `
+    const sql = `
       INSERT INTO clientes (
         cliente, cidade, cep, endereco, bairro, numero, pais, uf, ativo,
         telefone, celular, datanascimento, datahoracadastro,
         naturalidade, nacionalidade, rg, sexo, estadocivil,
         cpf, cnpj, tipocliente, e_mail, ie, im, fantasia, limite
       )
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
+      VALUES (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,
+        $10,$11,$12,$13,
+        $14,$15,$16,$17,$18,
+        $19,$20,$21,$22,$23,$24,$25,$26
+      )
       RETURNING controle
     `;
-    const valuesCliente = [
-      cliente, cidade, cep, endereco, bairro, numero, pais, uf, ativo,
-      telefone, celular, datanascimento, datahoracadastro,
-      naturalidade, nacionalidade, rg, sexo, estadocivil,
-      cpf, cnpj, tipocliente, e_mail, ie, im, fantasia, limite
+
+    const valores = [
+      cliente || null,
+      cidade || null,
+      cep || null,
+      endereco || null,
+      bairro || null,
+      numero === '' ? null : numero,
+      pais || null,
+      uf || null,
+      ativo || 'SIM',
+      telefone || null,
+      celular || null,
+      datanascimento === '' ? null : datanascimento,
+      datahoracadastro || new Date(),
+      naturalidade || null,
+      nacionalidade || null,
+      rg || null,
+      sexo || null,
+      estadocivil || null,
+      cpf || null,
+      cnpj || null,
+      tipocliente || null,
+      e_mail || null,
+      ie || null,
+      im || null,
+      fantasia || null,
+      limite === '' ? null : limite
     ];
 
-    const { rows } = await pool.query(insertClienteSql, valuesCliente);
-    const clienteId = rows[0].controle;
+    const result = await pool.query(sql, valores);
 
-    // Inserir objetosVeiculos, se houver
-    if (objetos && objetos.length > 0) {
-      const insertObjSql = `
-        INSERT INTO objetosVeiculos (
-          clienteId, tipo, marca, modelo, ano, cor, placaSerie, observacoes, ativo
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'SIM')
-      `;
+    res.status(201).json({
+      sucesso: true,
+      controle: result.rows[0].controle
+    });
 
-      for (const obj of objetos) {
-        await pool.query(insertObjSql, [
-          clienteId,
-          obj.tipo || 'OUTRO',
-          obj.marca || '',
-          obj.modelo || '',
-          obj.ano || '',
-          obj.cor || '',
-          obj.placaSerie || '',
-          obj.observacoes || ''
-        ]);
-      }
-    }
-
-    res.status(201).json({ sucesso: true, id: clienteId });
-  } catch (err) {
-    console.error('Erro ao inserir cliente:', err.message);
-    res.status(500).json({ erro: err.message });
+  } catch (erro) {
+    console.error('Erro ao cadastrar cliente:', erro.message);
+    res.status(500).json({ erro: erro.message });
   }
 });
+
 
 
 app.get('/clientes', async (req, res) => {
