@@ -69,9 +69,6 @@ app.use((err, req, res, next) => {
 
 // ---------- START SERVER ----------
 const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 API rodando em http://localhost:${PORT}`);
-});
 
 // ---------- EXPORTS ----------
 module.exports = { app, pool };
