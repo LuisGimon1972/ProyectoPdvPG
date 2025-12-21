@@ -2405,11 +2405,21 @@ process.on('SIGINT', () => {
   pool.end().then(() => process.exit(0));
 });
 
-app.listen(PORT, async () => {
+/*app.listen(PORT, async () => {
   const ambiente = process.env.NODE_ENV || 'local';
 
   console.log(`🚀 Servidor rodando (${ambiente}) na porta ${PORT}`);
 
   await carregarBanco(pool);
   await inserirFuncionarioPadrao(pool);
-});
+});*/
+
+(async () => {
+  await carregarBanco(pool)
+  await inserirFuncionarioPadrao(pool)
+
+  app.listen(PORT, () => {
+    const ambiente = process.env.NODE_ENV || 'local';
+    console.log(`🚀 Servidor rodando (${ambiente}) na porta ${PORT}`);
+  })
+})();
