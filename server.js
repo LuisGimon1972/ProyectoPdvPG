@@ -1976,7 +1976,7 @@ app.post('/pagar', async (req, res) => {
     res.status(500).json({ erro: 'Erro ao inserir parcela' })
   }
 })
-
+//Comentario
 app.get('/pagar', async (req, res) => {
   const sql = `
     SELECT
