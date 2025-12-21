@@ -101,24 +101,24 @@ function renderizarPaginaCaixa() {
 
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="text-align:center; border:1px solid #ccc; background:#f9f9f9;">
+        <td style="text-align:center; border:1px solid #ccc; background:#f9f9f9;font-size:12px">
         ${mov.controle}
         </td>
-          <td style="border:1px solid #ccc;">${mov.funcionario}</td>
-          <td style="border:1px solid #ccc;">${mov.cliente.toUpperCase()}</td>
-          <td style="border:1px solid #ccc;">${mov.fornecedor.toUpperCase()}</td>
-          <td style="border:1px solid #ccc;">${mov.descricao.toUpperCase()}</td>
-          <td style="border:1px solid #ccc;">${mov.especies.toUpperCase()}</td>
-          <td style="text-align:right; border:1px solid #ccc;">
+          <td style="border:1px solid #ccc;font-size:12px">${mov.funcionario}</td>
+          <td style="border:1px solid #ccc;font-size:12px">${mov.cliente.toUpperCase()}</td>
+          <td style="border:1px solid #ccc;font-size:12px">${mov.fornecedor.toUpperCase()}</td>
+          <td style="border:1px solid #ccc;font-size:12px">${mov.descricao.toUpperCase()}</td>
+          <td style="border:1px solid #ccc;font-size:12px">${mov.especies.toUpperCase()}</td>
+          <td style="text-align:right; border:1px solid #ccc;font-size:12px">
           ${entrada.toFixed(2)}
           </td>
-          <td style="text-align:right; border:1px solid #ccc;">
+          <td style="text-align:right; border:1px solid #ccc;font-size:12px">
           ${saida.toFixed(2)}
           </td>
-          <td style="text-align:center; border:1px solid #ccc;">
+          <td style="text-align:center; border:1px solid #ccc;font-size:12px">
           ${formatarDataBRL(mov.datacadastro)}
           </td>
-          <td style="border:1px solid #ccc; text-align:center;">
+          <td style="border:1px solid #ccc; text-align:center;font-size:12px">
           <button class="btnExcluirx" data-controle="${mov.controle}">🗑️</button>
         </td>
 
