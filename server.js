@@ -20,7 +20,6 @@ const pool = new Pool({
     : false
 });
 
-
 const fs = require('fs')
 
 async function carregarBanco(pool) {
@@ -70,7 +69,7 @@ app.use((err, req, res, next) => {
 // ---------- START SERVER ----------
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 API rodando em http://localhost:${PORT}`);
+  console.log(`🚀 API rodando em http:proyectopdvpg.onrender.com:${PORT}`);
 });
 
 // ---------- EXPORTS ----------
@@ -2409,7 +2408,7 @@ process.on('SIGINT', () => {
 });
 
 app.listen(PORT, async () => {
-  console.log(`🚀 Servidor iniciado em http://localhost:${PORT}`)
+  console.log(`🚀 Servidor iniciado em http://proyectopdvpg.onrender.com:${PORT}`)
   await carregarBanco(pool) // roda banco.sql se existir
   await inserirFuncionarioPadrao(pool)
 })
