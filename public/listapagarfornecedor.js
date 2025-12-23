@@ -32,7 +32,7 @@ function verParcelasDoFornecedor() {
     showToast(result, 2500);    
     return;
   }
-  fetch('/pagar')
+  fetch('/pagar/fornecedor')
     .then(res => res.json())
     .then(pagar => {
       listaParcelasFiltradasF = pagar.filter(p =>

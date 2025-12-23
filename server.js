@@ -2002,6 +2002,26 @@ app.get('/receber', async (req, res) => {
   }
 })
 
+app.get('/receber/cliente', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        r.*,
+        c.cliente AS nomecliente
+      FROM receber r
+      LEFT JOIN clientes c
+        ON r.cliente_id = c.controle
+      ORDER BY datavencimento
+    `)
+
+    res.json(result.rows)
+
+  } catch (err) {
+    console.error('❌ Erro ao buscar dados de receber:', err.message)
+    res.status(500).json({ erro: 'Erro ao buscar dados' })
+  }
+})
+
 app.delete('/receber/:controle', async (req, res) => {
   const { controle } = req.params
 
@@ -2203,6 +2223,27 @@ app.get('/pagar', async (req, res) => {
     LEFT JOIN fornecedores
       ON pagar.fornecedor_id = fornecedores.controle
     ORDER BY controle
+  `
+
+  try {
+    const { rows } = await pool.query(sql)
+    res.json(rows)
+
+  } catch (err) {
+    console.error('❌ Erro ao buscar dados de pagar:', err.message)
+    res.status(500).json({ erro: 'Erro ao buscar dados' })
+  }
+})
+
+app.get('/pagar/fornecedor', async (req, res) => {
+  const sql = `
+    SELECT
+      pagar.*,
+      fornecedores.fornecedor AS nomefornecedor
+    FROM pagar
+    LEFT JOIN fornecedores
+      ON pagar.fornecedor_id = fornecedores.controle
+    ORDER BY datavencimento
   `
 
   try {

@@ -34,7 +34,7 @@ function verParcelasDoCliente() {
     return;
   }
 
-  fetch('/receber')
+  fetch('/receber/cliente')
     .then(res => res.json())
     .then(receber => {
       listaParcelasFiltradas = receber.filter(p =>
