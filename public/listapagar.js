@@ -33,8 +33,10 @@ function getStatusFiltroSelecionado() {
 }
 
 function filtrarPorStatus(dados, status) {
-  if (status === 'aberto' || status === 'pago') {
-    return dados.filter(p => p.status.toLowerCase() === status.toLowerCase());
+  if (status === 'aberto' || status === 'pago' || status === 'cancelado') {
+    return dados.filter(
+      p => p.status.toLowerCase() === status.toLowerCase()
+    );
   }
   return dados;
 }
@@ -73,7 +75,7 @@ function renderizarPaginaPagar() {
         <td style="border:1px solid #ccc;text-align: right;">${parseFloat(p.multa).toFixed(2)}</td>
         <td style="border:1px solid #ccc;text-align: right;">${parseFloat(p.juros).toFixed(2)}</td>
         <td style="border:1px solid #ccc;text-align: center;">${p.status}</td>
-        <td style="border:1px solid #ccc;"><button class="btnExcluirpa" data-controle="${p.controle}">🗑️</button></td>
+        <td style="border:1px solid #ccc;"><button class="btnExcluirpa" title="Cancelar conta" data-controle="${p.controle}">🗑️</button></td>
       `;
       tbody.appendChild(linha);
     });
@@ -101,7 +103,7 @@ function configurarBotoesExcluirPagar() {
     if (!controle) return;
 
     Object.assign(botao.style, {
-      backgroundColor: '#1476dfff',
+      backgroundColor: '#f1ab13',
       color: 'white',
       border: 'none',
       padding: '6px 12px',
@@ -210,7 +212,7 @@ function renderizarPaginacaoPagar() {
       imagem.style.cssText = 'width: 50px; margin-bottom: 10px;';
     
       const texto = document.createElement('p');
-      texto.textContent = 'Deseja realmente excluir essa Parcela?';
+      texto.textContent = 'Deseja realmente cancelar essa Parcela?';
       texto.style.marginBottom = '15px';
     
       const btnSim = document.createElement('button');
@@ -237,22 +239,25 @@ function renderizarPaginacaoPagar() {
       document.body.appendChild(modal);                  
       btnSim.onclick = () => {
         document.body.removeChild(modal);
-    
-        fetch(`/pagar/${controle}`, { method: 'DELETE' })
-          .then(res => {
-            if (!res.ok) throw new Error();
-            result = "Parcela removida com sucesso!";  
-            showToast(result, 2500);                                                             
-            resultado.style.color = "green";                
-            resultado.style.display = "block";  
-            esperar();         
-            limparNome();
-            document.getElementById('formPresenta').style.display = 'none'; 
-            document.getElementById('formListaPagar').style.display = 'block';
-            document.getElementById('btnPag').click();
-          })
-          .catch()  ;
-      };        
+        fetch(`/pagar/cancelar/${controle}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+        })
+        .then(async res => {
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.erro || 'Não foi possível cancelar a parcela', 3000);
+        return;
+        }
+
+        showToast('Parcela cancelada com sucesso!', 2500);    
+        dadosPagar = dadosPagar.filter(p => p.controle != controle);
+        renderizarPaginaPagar();
+        })
+        .catch(() => {
+        showToast('Erro de comunicação com o servidor', 3000);
+        });
+        };
       
       btnCancelar.onclick = () => {
         document.body.removeChild(modal);

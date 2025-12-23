@@ -80,7 +80,7 @@ function renderizarPaginaReceber() {
         <td style="border:1px solid #ccc;text-align: right;">${parseFloat(r.juros).toFixed(2)}</td>
         <td style="border:1px solid #ccc;text-align: center;">${r.status}</td>
         <td style="border:1px solid #ccc;text-align:center;">
-          <button class="btnExcluirReceber" data-controle="${r.controle}">🗑️</button>
+          <button class="btnExcluirReceber" title="Cancelar conta" data-controle="${r.controle}">🗑️</button>
         </td>
       `;
       tbody.appendChild(linha);
@@ -184,7 +184,6 @@ function renderizarPaginacao() {
   paginacao.appendChild(btnProximo);
 }
 
-
   function removerReceber(controle) {    
       const modal = document.createElement('div');
       modal.style.cssText = `
@@ -240,27 +239,27 @@ function renderizarPaginacao() {
       document.body.appendChild(modal);                  
       btnSim.onclick = () => {
         document.body.removeChild(modal);
-    
         fetch(`/receber/cancelar/${controle}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
         })
+        .then(async res => {
+        const data = await res.json();
 
-          .then(res => {
-            if (!res.ok) throw new Error();
-            result = "Parcela cancelada com sucesso!";  
-            showToast(result, 2500);                                                             
-            resultado.style.color = "green";                
-            resultado.style.display = "block";  
-            esperar();         
-            limparNome();
-            document.getElementById('formPresenta').style.display = 'none'; 
-            document.getElementById('formListaReceber').style.display = 'block';
-            document.getElementById('btnRec').click();
-          })
-          .catch()  ;
-      };        
-      
+        if (!res.ok) {
+          showToast(data.erro || 'Não foi possível cancelar a parcela', 3000);
+        return;
+        }
+        showToast(data.mensagem || 'Parcela cancelada com sucesso!', 2500);    
+        limparNome();
+        document.getElementById('formPresenta').style.display = 'none';
+        document.getElementById('formListaReceber').style.display = 'block';
+        document.getElementById('btnRec').click();
+      })
+      .catch(() => {
+        showToast('Erro de comunicação com o servidor', 3000);
+      });
+      };      
       btnCancelar.onclick = () => {
         document.body.removeChild(modal);
       };

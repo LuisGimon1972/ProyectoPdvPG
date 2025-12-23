@@ -102,7 +102,7 @@ function renderizarTabelaFornecedorComPaginacao() {
       <td style="border:1px solid #ccc;text-align: right;">R$ ${multa.toFixed(2)}</td>
       <td style="border:1px solid #ccc;text-align: right;">R$ ${juros.toFixed(2)}</td>
       <td style="border:1px solid #ccc;text-align: center;">${p.status}</td>
-      <td><button class="btnExcluirPag1" data-controle="${controle}">🗑️</button></td>
+      <td><button class="btnExcluirPag1" title="Cancelar conta" data-controle="${controle}">🗑️</button></td>
     `;
     tbody.appendChild(linha);
   });
@@ -494,23 +494,29 @@ async function salvarLancamentosCaixaPagar() {
       document.body.appendChild(modal);                  
       btnSim.onclick = () => {
         document.body.removeChild(modal);
-    
-        fetch(`/pagar/${controle}`, { method: 'DELETE' })
-          .then(res => {
-            if (!res.ok) throw new Error();
-            result = "Parcela removida com sucesso!";  
-            showToast(result, 2500);                                                             
-            resultado.style.color = "green";                
-            resultado.style.display = "block";  
-            esperar();         
-            limparNome();
-            document.getElementById('formPresenta').style.display = 'none'; 
-            document.getElementById('formListaPagarFornecedor').style.display = 'none';
-            document.getElementById('btnPagFor').click();                        
-            document.getElementById('btnReCliPagar').click();            
-          })
-          .catch()  ;
-      };        
+        fetch(`/pagar/cancelar/${controle}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+        })
+        .then(async res => {
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.erro || 'Não foi possível cancelar a parcela', 3000);
+        return;
+        }
+
+        showToast('Parcela cancelada com sucesso!', 2500);    
+        limparNome
+        dadosPagar = dadosPagar.filter(p => p.controle != controle);
+        document.getElementById('formPresenta').style.display = 'none'; 
+        document.getElementById('formListaPagarFornecedor').style.display = 'none';
+        document.getElementById('btnPagFor').click();                        
+        document.getElementById('btnReCliPagar').click();            
+        })
+        .catch(() => {
+        showToast('Erro de comunicação com o servidor', 3000);
+        });
+        };
       
       btnCancelar.onclick = () => {
         document.body.removeChild(modal);

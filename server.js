@@ -1958,7 +1958,7 @@ app.put('/receber/cancelar/:controle', async (req, res) => {
   const { controle } = req.params;
 
   try {
-    await pool.query(
+    const result = await pool.query(
       `UPDATE receber
        SET status = 'CANCELADO'
        WHERE controle = $1
@@ -1966,7 +1966,14 @@ app.put('/receber/cancelar/:controle', async (req, res) => {
       [controle]
     );
 
+    if (result.rowCount === 0) {
+      return res.status(400).json({
+        erro: 'Só é possível cancelar parcelas com status ABERTO'
+      });
+    }
+
     res.json({ mensagem: 'Parcela cancelada com sucesso' });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ erro: 'Erro ao cancelar parcela' });
@@ -2207,6 +2214,32 @@ app.get('/pagar', async (req, res) => {
     res.status(500).json({ erro: 'Erro ao buscar dados' })
   }
 })
+
+app.put('/pagar/cancelar/:controle', async (req, res) => {
+  const { controle } = req.params;
+
+  try {
+    const result = await pool.query(
+      `UPDATE pagar
+       SET status = 'CANCELADO'
+       WHERE controle = $1
+       AND status = 'ABERTO'`,
+      [controle]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(400).json({
+        erro: 'Só é possível cancelar parcelas com status ABERTO'
+      });
+    }
+
+    res.json({ mensagem: 'Parcela cancelada com sucesso' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao cancelar parcela' });
+  }
+});
+
 
 
 app.delete('/pagar/:controle', async (req, res) => {

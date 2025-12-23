@@ -98,7 +98,7 @@ function renderizarTabelaComPaginacao() {
       <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(parcela.multa).toFixed(2)}</td>
       <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(parcela.juros).toFixed(2)}</td>
       <td style="border:1px solid #ccc;text-align: center;">${parcela.status}</td>
-      <td style="border:1px solid #ccc;"><button class="btnExcluirrec" data-controle="${controle}">🗑️</button></td>
+      <td style="border:1px solid #ccc;"><button class="btnExcluirrec" title="Cancelar conta" data-controle="${controle}">🗑️</button></td>
     `;
     tbody.appendChild(linha);
   });
@@ -268,26 +268,28 @@ function removerReceberC(controle) {
       document.body.appendChild(modal);                  
       btnSim.onclick = () => {
         document.body.removeChild(modal);
-    
         fetch(`/receber/cancelar/${controle}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
         })
-          .then(res => {
-            if (!res.ok) throw new Error();
-            result = "Parcela cancelada com sucesso!";  
-            showToast(result, 2500);                                                             
-            resultado.style.color = "green";                
-            resultado.style.display = "block";  
-            esperar();         
-            limparNome();
-            document.getElementById('formPresenta').style.display = 'none'; 
-            document.getElementById('formListaReceberCliente').style.display = 'none';
-            document.getElementById('btnReCli').click();
-            document.getElementById('btnReCliB').click();
-          })
-          .catch()  ;
-      };              
+        .then(async res => {
+        const data = await res.json();
+
+        if (!res.ok) {
+          showToast(data.erro || 'Não foi possível cancelar a parcela', 3000);
+        return;
+        }
+        showToast(data.mensagem || 'Parcela cancelada com sucesso!', 2500);    
+        limparNome();
+        document.getElementById('formPresenta').style.display = 'none'; 
+        document.getElementById('formListaReceberCliente').style.display = 'none';
+        document.getElementById('btnReCli').click();
+        document.getElementById('btnReCliB').click();    
+      })
+      .catch(() => {
+        showToast('Erro de comunicação com o servidor', 3000);
+      });
+      };                    
       btnCancelar.onclick = () => {
         document.body.removeChild(modal);
       };
