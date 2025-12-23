@@ -241,7 +241,7 @@ function removerReceberC(controle) {
       imagem.style.cssText = 'width: 50px; margin-bottom: 10px;';
     
       const texto = document.createElement('p');
-      texto.textContent = 'Deseja realmente excluir essa Parcela?';
+      texto.textContent = 'Deseja realmente cancelar essa Parcela?';
       texto.style.marginBottom = '15px';
     
       const btnSim = document.createElement('button');
@@ -269,10 +269,13 @@ function removerReceberC(controle) {
       btnSim.onclick = () => {
         document.body.removeChild(modal);
     
-        fetch(`/receber/${controle}`, { method: 'DELETE' })
+        fetch(`/receber/cancelar/${controle}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+        })
           .then(res => {
             if (!res.ok) throw new Error();
-            result = "Parcela removida com sucesso!";  
+            result = "Parcela cancelada com sucesso!";  
             showToast(result, 2500);                                                             
             resultado.style.color = "green";                
             resultado.style.display = "block";  
@@ -419,7 +422,7 @@ async function salvarLancamentosCaixaReceber() {
   const funcionario = funcionarioSelecionadoR;
   const cod_cliente = controleSeleCliente || 1;
   const cliente = nomeclienSele;
-  const descricao = 'Recebimento de Parcelas';
+  const descricao = 'Recebimento Parcelas';
   const agora = new Date();
   const ano = agora.getFullYear();
   const mes = String(agora.getMonth() + 1).padStart(2, '0'); 
@@ -470,8 +473,7 @@ async function salvarLancamentosCaixaReceber() {
       } else {
         console.log('Movimentação salva com sucesso:', movimento.especies);
         limparoperacao();   
-        removerPaginacaoParcelas()   
-       // recarregarEExecutar()
+        removerPaginacaoParcelas()          
       }
     } catch (err) {
       console.error('Erro de rede ao enviar movimentação:', err);
@@ -659,7 +661,6 @@ document.addEventListener('DOMContentLoaded', () => {
   resetarModuloParcelas()   
 }
 
-
 function limparoperacao(){
     document.getElementById('troco').value = '0.00'
     document.getElementById('total-geral').innerText = '0.00';
@@ -698,8 +699,7 @@ function resetarModuloParcelas() {
   console.log('🔁 Módulo de parcelas reiniciado com sucesso.');
 }
 
-function resetarVariaveisGlobais() {
-  
+function resetarVariaveisGlobais() {  
   paginaAtualParcelas = 1;
   registrosPorPaginaParcelas = 11;
   listaParcelasFiltradas = [];
@@ -720,8 +720,7 @@ function resetarVariaveisGlobais() {
   }
 }
 
-function resetarUI() {
-  
+function resetarUI() {  
   limparoperacao();
   removerPaginacaoParcelas();  
   document.getElementById('formListaReceberCliente').style.display = 'none';

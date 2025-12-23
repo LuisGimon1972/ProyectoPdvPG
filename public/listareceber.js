@@ -24,6 +24,9 @@ function verreceber() {
         receber = receber.filter(r => r.status.toLowerCase() === 'aberto');
       } else if (statusSelecionado === 'pago') {
         receber = receber.filter(r => r.status.toLowerCase() === 'pago');
+
+      } else if (statusSelecionado === 'cancelado') {
+        receber = receber.filter(r => r.status.toLowerCase() === 'cancelado');
       }
 
       dadosReceber = receber;
@@ -37,13 +40,10 @@ function verreceber() {
 
 function formatarDataBRL(dataISO) {
   if (!dataISO) return '';
-  // Pega só a data YYYY-MM-DD antes do 'T'
   const dataSomente = dataISO.split('T')[0]; 
   const [ano, mes, dia] = dataSomente.split('-');
   return `${dia}/${mes}/${ano}`;
 }
-
-
 
 function renderizarPaginaReceber() {
   const tabela = document.getElementById('tabelaReceber');
@@ -213,7 +213,7 @@ function renderizarPaginacao() {
       imagem.style.cssText = 'width: 50px; margin-bottom: 10px;';
     
       const texto = document.createElement('p');
-      texto.textContent = 'Deseja realmente excluir essa Parcela?';
+      texto.textContent = 'Deseja realmente cancelar essa Parcela?';
       texto.style.marginBottom = '15px';
     
       const btnSim = document.createElement('button');
@@ -241,10 +241,14 @@ function renderizarPaginacao() {
       btnSim.onclick = () => {
         document.body.removeChild(modal);
     
-        fetch(`/receber/${controle}`, { method: 'DELETE' })
+        fetch(`/receber/cancelar/${controle}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+        })
+
           .then(res => {
             if (!res.ok) throw new Error();
-            result = "Parcela removida com sucesso!";  
+            result = "Parcela cancelada com sucesso!";  
             showToast(result, 2500);                                                             
             resultado.style.color = "green";                
             resultado.style.display = "block";  

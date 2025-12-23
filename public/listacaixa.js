@@ -103,83 +103,26 @@ function renderizarPaginaCaixa() {
       linha.innerHTML = `
         <td style="text-align:center; border:1px solid #ccc; background:#f9f9f9;font-size:12px">
         ${mov.controle}
-        </td>
-          <td style="border:1px solid #ccc;font-size:12px">${mov.funcionario}</td>
-          <td style="border:1px solid #ccc;font-size:12px">${mov.cliente.toUpperCase()}</td>
-          <td style="border:1px solid #ccc;font-size:12px">${mov.fornecedor.toUpperCase()}</td>
-          <td style="border:1px solid #ccc;font-size:12px">${mov.descricao.toUpperCase()}</td>
-          <td style="border:1px solid #ccc;font-size:12px">${mov.especies.toUpperCase()}</td>
-          <td style="text-align:right; border:1px solid #ccc;font-size:12px">
-          ${entrada.toFixed(2)}
-          </td>
-          <td style="text-align:right; border:1px solid #ccc;font-size:12px">
-          ${saida.toFixed(2)}
-          </td>
-          <td style="text-align:center; border:1px solid #ccc;font-size:12px">
-          ${formatarDataBRL(mov.datacadastro)}
-          </td>
-          <td style="border:1px solid #ccc; text-align:center;font-size:12px">
-          <button class="btnExcluirx" data-controle="${mov.controle}">🗑️</button>
-        </td>
-
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.funcionario} </td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.cliente.toUpperCase()} </td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.fornecedor.toUpperCase()}</td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.descricao.toUpperCase()}</td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.especies.toUpperCase()}</td>
+        <td style="text-align:right; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${entrada.toFixed(2)}</td>
+        <td style="text-align:right; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${saida.toFixed(2)}</td>
+        <td style="text-align:center; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${formatarDataBRL(mov.datacadastro)}</td>
       `;
       tbody.appendChild(linha);
     });
 
     tbody.appendChild(criarLinhaTotal('TOTAL DE ENTRADAS', totalEntrada));
     tbody.appendChild(criarLinhaTotal1('TOTAL DE SAÍDAS', totalSaida));
-    tbody.appendChild(criarLinhaTotal1('SALDO FINAL', totalEntrada - totalSaida, true));
-    configurarBotoesExcluirCaixa();
+    tbody.appendChild(criarLinhaTotal1('SALDO FINAL', totalEntrada - totalSaida, true));    
   }
 
   tabela.style.display = 'table';
   renderizarPaginacaoCaixa();
 }
-
-function configurarBotoesExcluirCaixa() {
-  document.querySelectorAll('.btnExcluirx').forEach(botao => {
-    const controle = botao.getAttribute('data-controle');
-    if (!controle) return;
-    Object.assign(botao.style, {
-      backgroundColor: '#f1ab13',
-      color: 'white',
-      border: 'none',
-      padding: '6px 12px',
-      borderRadius: '8px',
-      cursor: 'pointer'
-    });    
-    botao.disabled = false;    
-    const pai = botao.parentElement;
-    if (pai && !pai.classList.contains('coluna-botoes')) {
-      pai.classList.add('coluna-botoes');
-    }   
-    botao.removeEventListener('click', botao._handlerExcluir);
-    const handler = () => removerCaixa(controle);
-    botao.addEventListener('click', handler);
-    botao._handlerExcluir = handler;
-  });
-}
-
-function criarBotaoExcluirCaixa(controle) {
-  const botao = document.createElement('button');
-  botao.className = 'btnExcluirx';
-  botao.setAttribute('data-controle', controle);
-  botao.innerText = '🗑️';
-  Object.assign(botao.style, {
-    backgroundColor: '#f1ab13',
-    color: 'white',
-    border: 'none',
-    padding: '6px 12px',
-    borderRadius: '8px',
-    cursor: 'pointer'
-  });
-  botao.addEventListener('click', () => {
-    removerCaixa(controle);
-  });
-  return botao;
-}
-
-
 function renderizarPaginacaoCaixa() {
   const totalPaginas = Math.ceil(dadosCaixa.length / itensPorPaginaCaixa);
   const paginacao = document.getElementById('paginacaoCaixa');
@@ -232,82 +175,3 @@ function renderizarPaginacaoCaixa() {
   };
   paginacao.appendChild(btnProximo);
 }
-
-
-
-  function removerCaixa(controle) {          
-      const modal = document.createElement('div');
-      modal.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); display: flex;
-        align-items: center; justify-content: center; z-index: 1000;
-      `;
-    
-      const caixa = document.createElement('div');
-      caixa.style.cssText = `
-        background: white; padding: 20px; border-radius: 10px;
-        text-align: center; max-width: 320px; width: 90%;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2); overflow: hidden;
-        font-family: sans-serif;
-      `;
-    
-      const franja = document.createElement('div');
-      franja.style.cssText = `
-        height: 6px; background-color: #f1ab13; width: 100%;
-        margin: -20px -20px 10px -20px; border-top-left-radius: 10px; border-top-right-radius: 10px;
-      `;
-    
-      const imagem = document.createElement('img');
-      imagem.src = 'https://cdn-icons-png.flaticon.com/512/564/564619.png';
-      imagem.alt = 'Advertência';
-      imagem.style.cssText = 'width: 50px; margin-bottom: 10px;';
-    
-      const texto = document.createElement('p');
-      texto.textContent = 'Deseja realmente excluir essa Movimentação?';
-      texto.style.marginBottom = '15px';
-    
-      const btnSim = document.createElement('button');
-      btnSim.textContent = 'Sim';
-      btnSim.style.cssText = `
-        margin-right: 10px; padding: 8px 16px;
-        background-color: #dc3545; color: white;
-        border: none; border-radius: 5px; cursor: pointer;
-      `;
-    
-      const btnCancelar = document.createElement('button');
-      btnCancelar.textContent = 'Cancelar';
-      btnCancelar.style.cssText = `
-        padding: 8px 16px; background-color: #6c757d;
-        color: white; border: none; border-radius: 5px;
-        cursor: pointer;
-      `;        
-      caixa.appendChild(franja);
-      caixa.appendChild(imagem);
-      caixa.appendChild(texto);
-      caixa.appendChild(btnSim);
-      caixa.appendChild(btnCancelar);
-      modal.appendChild(caixa);
-      document.body.appendChild(modal);                  
-      btnSim.onclick = () => {
-        document.body.removeChild(modal);
-    
-        fetch(`/caixa/${controle}`, { method: 'DELETE' })
-          .then(res => {
-            if (!res.ok) throw new Error();
-            result = "Movimentação excluída com sucesso!";  
-            showToast(result, 2500);                                                             
-            resultado.style.color = "green";                
-            resultado.style.display = "block";  
-            esperar();         
-            limparNome();
-            document.getElementById('formPresenta').style.display = 'none'; 
-            document.getElementById('formListaCaixa').style.display = 'block';
-            document.getElementById('btnRecaixa').click();
-          })
-          .catch()  ;
-      };        
-      
-      btnCancelar.onclick = () => {
-        document.body.removeChild(modal);
-      };
-  }

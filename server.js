@@ -892,7 +892,6 @@ app.get('/produtos', async (req, res) => {
   }
 })
 
-
 app.get('/produtos/max', async (req, res) => {
   try {
     const { rows } = await pool.query(
@@ -905,7 +904,6 @@ app.get('/produtos/max', async (req, res) => {
     res.status(500).json({ erro: 'Erro ao buscar controle máximo' })
   }
 })
-
 
 app.get('/produtos/codbarras/:codbarras', async (req, res) => {
   const { codbarras } = req.params
@@ -1955,6 +1953,26 @@ app.post('/receber', async (req, res) => {
     res.status(500).json({ error: 'Erro ao salvar movimentação' })
   }
 })
+
+app.put('/receber/cancelar/:controle', async (req, res) => {
+  const { controle } = req.params;
+
+  try {
+    await pool.query(
+      `UPDATE receber
+       SET status = 'CANCELADO'
+       WHERE controle = $1
+       AND status = 'ABERTO'`,
+      [controle]
+    );
+
+    res.json({ mensagem: 'Parcela cancelada com sucesso' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ erro: 'Erro ao cancelar parcela' });
+  }
+});
+
 
 
 app.get('/receber', async (req, res) => {
