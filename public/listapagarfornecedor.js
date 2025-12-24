@@ -90,18 +90,18 @@ function renderizarTabelaFornecedorComPaginacao() {
     const linha = document.createElement('tr');
     linha.innerHTML = `
       <td style="border:1px solid #ccc;text-align: center;"><input type="checkbox" class="checkParcelaF" value="${controle}" data-valor="${valorAberto.toFixed(2)}" ${checked}></td>
-      <td style="border:1px solid #ccc;text-align: center;">${p.controle}</td>
-      <td style="border:1px solid #ccc;">${p.funcionario}</td>
-      <td style="border:1px solid #ccc;">${p.nomefornecedor}</td>
-      <td style="border:1px solid #ccc;text-align: right;">R$ ${valorOriginal.toFixed(2)}</td>
-      <td style="border:1px solid #ccc;text-align: right;">R$ ${valorPago.toFixed(2)}</td>
-      <td style="border:1px solid #ccc;text-align: center;">${p.numeroparcela}</td>
-      <td style="border:1px solid #ccc;text-align: center;">${p.totalparcelas}</td>
-      <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datacadastro)}</td>
-      <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datavencimento)}</td>      
-      <td style="border:1px solid #ccc;text-align: right;">R$ ${multa.toFixed(2)}</td>
-      <td style="border:1px solid #ccc;text-align: right;">R$ ${juros.toFixed(2)}</td>
-      <td style="border:1px solid #ccc;text-align: center;">${p.status}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.controle}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;">${p.funcionario}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;">${p.nomefornecedor}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${valorOriginal.toFixed(2)}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${valorPago.toFixed(2)}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.numeroparcela}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.totalparcelas}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datacadastro)}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datavencimento)}</td>      
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${multa.toFixed(2)}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${juros.toFixed(2)}</td>
+      <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.status}</td>
       <td><button class="btnExcluirPag1" title="Cancelar conta" data-controle="${controle}">🗑️</button></td>
     `;
     tbody.appendChild(linha);

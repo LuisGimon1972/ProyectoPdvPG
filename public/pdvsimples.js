@@ -4,7 +4,7 @@ let tipoBusca = ''
 let qtde = 0
 let zerado = 0
 function cadvendapdv()
-{
+{    
     limparNome();  
     limparcalculos();
     carregarFuncionarios()
@@ -12,10 +12,10 @@ function cadvendapdv()
     desabilitarControles(true)
     RestauraLabel()
     tornarDescontoEAcrescimoSomenteLeitura(false)        
+    swti = 0;
     document.getElementById('btnFinalizarOs').style.display = 'none';
     document.getElementById('btnFinalizarOsOs').style.display = 'none';
-    document.getElementById('btnCancelaros').style.display = 'none';    
-    swti = 0;
+    document.getElementById('btnCancelaros').style.display = 'none';        
     document.getElementById('formPresenta').style.display = 'none';    
     document.getElementById('formPdv').style.display = 'block';   
     document.getElementById('formPainel').style.display = 'block';   
