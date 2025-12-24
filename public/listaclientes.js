@@ -78,12 +78,12 @@ function renderizarPaginaClientes() {
     pagina.forEach(cliente => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="border:1px solid #ccc;text-align: center;">${cliente.cpf || ''}</td>
-        <td style="border:1px solid #ccc;text-align: center;">${cliente.cnpj || ''}</td>
-        <td style="border:1px solid #ccc;">${cliente.cliente}</td>
-        <td style="border:1px solid #ccc;">${cliente.e_mail || ''}</td>
-        <td style="border:1px solid #ccc;">${cliente.telefone || ''}</td>
-        <td style="border:1px solid #ccc;">${cliente.cidade || ''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${cliente.cpf || ''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${cliente.cnpj || ''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${cliente.cliente}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${cliente.e_mail || ''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${cliente.telefone || ''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${cliente.cidade || ''}</td>
         <td style="border:1px solid #ccc;">
           <button class="btnEditar" data-controle="${cliente.controle}">✏️</button>
           <button class="btnExcluir" data-controle="${cliente.controle}">🗑️</button>

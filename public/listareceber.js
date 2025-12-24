@@ -66,19 +66,19 @@ function renderizarPaginaReceber() {
 
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="border:1px solid #ccc;text-align: center;">${r.controle}</td>
-        <td style="border:1px solid #ccc;">${r.funcionario}</td>
-        <td style="border:1px solid #ccc;">${r.nomecliente}</td>
-        <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(r.valororiginal).toFixed(2)}</td>
-        <td style="border:1px solid #ccc;text-align: right;">R$ ${parseFloat(r.valorpago).toFixed(2)}</td>
-        <td style="border:1px solid #ccc;text-align: center;">${r.numeroparcela}</td>
-        <td style="border:1px solid #ccc;text-align: center;">${r.totalparcelas}</td>
-        <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(r.datacadastro)}</td>
-        <td style="border:1px solid #ccc;text-align: center;">${formatarDataBRL(r.datavencimento)}</td>
-        <td style="border:1px solid #ccc;text-align: center;">${r.datapagamento ? formatarDataBRL(r.datapagamento) : 'PENDIENTE'}</td>
-        <td style="border:1px solid #ccc;text-align: right;">${parseFloat(r.multa).toFixed(2)}</td>
-        <td style="border:1px solid #ccc;text-align: right;">${parseFloat(r.juros).toFixed(2)}</td>
-        <td style="border:1px solid #ccc;text-align: center;">${r.status}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${r.controle}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${r.funcionario}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${r.nomecliente}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${parseFloat(r.valororiginal).toFixed(2)}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${parseFloat(r.valorpago).toFixed(2)}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${r.numeroparcela}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${r.totalparcelas}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(r.datacadastro)}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(r.datavencimento)}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${r.datapagamento ? formatarDataBRL(r.datapagamento) : 'PENDIENTE'}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">${parseFloat(r.multa).toFixed(2)}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">${parseFloat(r.juros).toFixed(2)}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${r.status}</td>
         <td style="border:1px solid #ccc;text-align:center;">
           <button class="btnExcluirReceber" title="Cancelar conta" data-controle="${r.controle}">🗑️</button>
         </td>

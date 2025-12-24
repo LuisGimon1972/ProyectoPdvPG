@@ -38,13 +38,13 @@ function renderizarPaginaFuncionarios() {
     pagina.forEach(funcionario => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="border:1px solid #ccc;text-align: center;">${funcionario.cpff}</td>
-        <td style="border:1px solid #ccc;">${funcionario.rgf}</td>
-        <td style="border:1px solid #ccc;">${funcionario.funcionariof}</td>
-        <td style="border:1px solid #ccc;">${funcionario.funcaof ||''}</td>
-        <td style="border:1px solid #ccc;">${funcionario.e_mailf ||''}</td>
-        <td style="border:1px solid #ccc;">${funcionario.telefonef ||''}</td>
-        <td style="border:1px solid #ccc;">
+        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${funcionario.cpff}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${funcionario.rgf}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${funcionario.funcionariof}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${funcionario.funcaof ||''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${funcionario.e_mailf ||''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">${funcionario.telefonef ||''}</td>
+        <td style="font-size: 10px;border:1px solid #ccc;">
           <button class="btnEditarf" data-controle="${funcionario.controle}">✏️</button>
           <button class="btnExcluirf" data-controle="${funcionario.controle}">🗑️</button>
           <button class="btnVerf" data-controle="${funcionario.controle}">👁️</button>
