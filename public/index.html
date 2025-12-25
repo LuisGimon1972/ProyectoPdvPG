@@ -11,7 +11,7 @@
       <!-- Espaço esquerdo vazio para equilibrar -->      
         <!-- Título centralizado -->
          <div style="display: flex; align-items: center; gap: 8px;">
-           <label style="font-size: 14px; color: black;" id="nomeemitente">Emitente:</label>          
+           <label style="font-size: 14px; color: white;" id="nomeemitente">Emitente:</label>          
        </div>        
         <h3 style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0;">
         🌐 Gestão Comercial Oriente </h3>
@@ -27,7 +27,7 @@
   <div class="layout">    
     <!-- Painel Esquerdo -->
     <div class="painel-esquerdo">
-            <h1 style="font-family: Arial, sans-serif; font-size: 20px; text-align: center; background-color: #f8922c; color: white; border-radius: 8px;">
+            <h1 style="font-family: Arial, sans-serif; font-size: 20px; text-align: center; background-color: rgb(2, 2, 71); color: white; border-radius: 8px;">
          Painel de Opções
       </h1><br>
       
@@ -68,7 +68,7 @@
     </div>
    
     <div class="conteudo">
-      <h1 style="font-family: Arial, sans-serif; font-size: 20px; text-align: center; background-color: #f1ab13; color: white; border-radius: 8px;">
+      <h1 style="font-family: Arial, sans-serif; font-size: 20px; text-align: center; background-color: rgb(2, 2, 71); color: white; border-radius: 8px;">
          Painel Principal
       </h1><br>
       
@@ -1552,17 +1552,17 @@
 
     <!-- Painel Direito -->
     <div id="formPainel" style="display: none;" class="painel-direito tw-w-full tw-w-max[425px]">      
-      <h1 style="font-size: 20px; text-align: center;background-color: #f8922c;color: white; border-radius: 8px;">Painel de Operações</h1><br><br>
+      <h1 style="font-size: 20px; text-align: center;color: white; border-radius: 8px;">Painel de Operações</h1><br><br>
       <div id="resultado" style="font-size: 22px;">
     </div>
     
     <div id="formCalculos" style="display: none;">
      <div style="margin-top: 1px; text-align: left;">
-        <h3 style="color: rgb(2, 2, 97); text-align: center;">Finalizar Operação</h3>
+        <h3 style="color: white; text-align: center;">Finalizar Operação</h3>
 
-      <div style="display: flex; gap: 30px; margin-top: 20px;">       
+      <div style="color: white;display: flex; gap: 30px; margin-top: 20px;">       
         <div>
-          <label style="font-size: 14px;" for="desconto">Desconto:</label><br>
+          <label style="color: white;font-size: 14px;" for="desconto">Desconto:</label><br>
           <input type="number" id="desconto" placeholder="R$ 0,00" step="0.01" style="width: 78px;text-align: right">
           <label style="margin-left: 1px;">
           <input type="checkbox" id="descontoPorcentagem"> %
@@ -1570,7 +1570,7 @@
         </div>
         
         <div>
-          <label style="font-size: 14px;" for="acrescimo">Acréscimo:</label><br>
+          <label style="color: white;font-size: 14px;" for="acrescimo">Acréscimo:</label><br>
           <input type="number" id="acrescimo" placeholder="R$ 0,00" step="0.01" style="width: 78px;text-align: right">
           <label style="margin-left: 1px;">
           <input type="checkbox" id="acrescimoPorcentagem"> %
@@ -1578,21 +1578,21 @@
         </div>
       </div>            
       
-        <label style="margin-top: 10px;font-size: 16px;" for="dinheiro" >Dinheiro ou PIX: </label><br>
+        <label style="color: white;margin-top: 10px;font-size: 16px;" for="dinheiro" >Dinheiro ou PIX: </label><br>
         <input style="text-align: right;width: 95%;"type="number" id="dinheiro" step="0.01" placeholder="R$ 0,00"><br>          
-        <label style="font-size: 14px;"for="cartaoDebito">Cartão de Débito: </label>
+        <label style="color: white;font-size: 14px;"for="cartaoDebito">Cartão de Débito: </label>
         <input style="text-align: right;width: 95%"type="number" id="cartaoDebito" step="0.01" placeholder="R$ 0,00"><br>              
 
-        <label style="font-size: 14px;"for="cartaoCredito">Cartão de Crédito: </label>
+        <label style="color: white;font-size: 14px;"for="cartaoCredito">Cartão de Crédito: </label>
         <input style="text-align: right;width: 95%"type="number" id="cartaoCredito" step="0.01" placeholder="R$ 0,00"><br>      
-        <label style="font-size: 14px;">
+        <label style="color: white;font-size: 14px;">
           <input type="checkbox" id="parceladoCredito">
           Cartão Parcelado
         </label><br><br>         
 
-        <label style="font-size: 14px;"for="troco">Troco da operação: </label>
+        <label style="color: white;font-size: 14px;"for="troco">Troco da operação: </label>
         <input style="text-align: right;width: 95%"type="number" id="troco" step="0.01" placeholder="R$ 0,00"><br>       
-        <label style="font-size: 14px;" for="falta">Valor faltante da operação: </label>
+        <label style="color: white;font-size: 14px;" for="falta">Valor faltante da operação: </label>
         <input style="text-align: right;width: 95%"type="number" id="falta" step="0.01" placeholder="R$ 0,00"><br>             
         <p id="resulta"></p>
        </div>

@@ -11,7 +11,7 @@ body, html {
 
 /* Cabeçalho */
 header {
-  background-color: #f1ab13;
+  background-color: rgb(2, 2, 71);
   color: white;
   padding: 20px;
   text-align: center;
@@ -28,7 +28,8 @@ header {
 .painel-esquerdo {
   width: 235px;
   height: 220%; 
-  background-color: #f8922c;
+  color: white;
+  background-color:rgb(2, 2, 71);
   padding: 20px;
   border-right: 1px solid #ccc;
   border-radius: 0 20px 20px 0;  
@@ -47,7 +48,8 @@ header {
 .painel-direito {
   width: 18%;  
   height: 220%; 
-  background-color: #f8922c;  
+  color: white;
+  background-color: rgb(2, 2, 71);  
   padding: 20px;
   border-left: 1px solid #ccc;
   border-radius: 20px 0 0 20px;
@@ -78,7 +80,7 @@ select {
   padding: 5px;
 }
 .botao-azul {
-  background-color: rgb(235, 169, 27);
+  background-color: rgb(8, 8, 233);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -88,8 +90,8 @@ select {
 }
 
 .botao-blue {
-  background-color: #f8922c;
-  color: black;
+  background-color: rgb(2, 2, 71);
+  color: white;
   padding: 10px 20px;         
   padding-left: 15px;         
   text-align: left;  
@@ -101,8 +103,8 @@ select {
 }
 
 .botao-laranja {
-  background-color: #f35005;
-  color: black;
+  background-color: rgb(8, 8, 233);
+  color: white;
   padding: 10px 20px;         
   padding-left: 15px;         
   text-align: left;  
@@ -126,7 +128,7 @@ select {
 }
 
 .botao-azul:hover {
-  background-color: #f1ab13;    
+  background-color: rgb(46, 46, 250);    
 }
 .botoes {
   text-align: center;
@@ -149,7 +151,7 @@ select {
 }
 
 .tabela-venda th {
-  background-color: #f1ab13;
+  background-color: rgb(2, 2, 71);
   color: white;
   padding: 8px;
   text-align: left;
