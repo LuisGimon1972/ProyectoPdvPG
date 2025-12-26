@@ -62,19 +62,19 @@ function renderizarPaginaPagar() {
 
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.controle}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;">${p.funcionario}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;">${p.nomefornecedor}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${parseFloat(p.valororiginal).toFixed(2)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">R$ ${parseFloat(p.valorpago).toFixed(2)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.numeroparcela}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.totalparcelas}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datacadastro)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datavencimento)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.datapagamento ? formatarDataBRL(p.datapagamento) : 'PENDIENTE'}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">${parseFloat(p.multa).toFixed(2)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;">${parseFloat(p.juros).toFixed(2)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${p.status}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${p.controle}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;">${p.funcionario}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;">${p.nomefornecedor}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: right;">R$ ${parseFloat(p.valororiginal).toFixed(2)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: right;">R$ ${parseFloat(p.valorpago).toFixed(2)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${p.numeroparcela}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${p.totalparcelas}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datacadastro)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${formatarDataBRL(p.datavencimento)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${p.datapagamento ? formatarDataBRL(p.datapagamento) : 'PENDIENTE'}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: right;">${parseFloat(p.multa).toFixed(2)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: right;">${parseFloat(p.juros).toFixed(2)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${p.status}</td>
         <td style="border:1px solid #ccc;"><button class="btnExcluirpa" title="Cancelar conta" data-controle="${p.controle}">🗑️</button></td>
       `;
       tbody.appendChild(linha);

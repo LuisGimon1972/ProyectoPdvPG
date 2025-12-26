@@ -36,12 +36,12 @@ function renderizarPaginaFornecedores() {
     pagina.forEach(fornecedor => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;">${fornecedor.cnpj}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;">${fornecedor.ie}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;">${fornecedor.fornecedor}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;">${fornecedor.email || ''}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;">${fornecedor.telefone || ''}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;">${fornecedor.celular || ''}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;">${fornecedor.cnpj}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;">${fornecedor.ie}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;">${fornecedor.fornecedor}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;">${fornecedor.email || ''}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;">${fornecedor.telefone || ''}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;">${fornecedor.celular || ''}</td>
         <td style="border:1px solid #ccc;">
           <button class="btnEditarfo" data-controle="${fornecedor.controle}">✏️</button>
           <button class="btnExcluirfo" data-controle="${fornecedor.controle}">🗑️</button>

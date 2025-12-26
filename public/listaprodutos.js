@@ -40,12 +40,12 @@ function renderizarPaginaProdutos() {
     pagina.forEach(produto => {
       const linha = document.createElement('tr');
       linha.innerHTML = `
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: center;height:30px">${produto.controle}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;height:30px">${produto.produto}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;height:30px">${produto.codbarras}</td>                
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;height:30px">${parseFloat(produto.quantidade).toFixed(2)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;height:30px">R$ ${parseFloat(produto.precocusto).toFixed(2)}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;text-align: right;height:30px">R$ ${parseFloat(produto.precovenda).toFixed(2)}</td>        
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: center;height:30px">${produto.controle}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;height:30px">${produto.produto}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;height:30px">${produto.codbarras}</td>                
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: right;height:30px">${parseFloat(produto.quantidade).toFixed(2)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: right;height:30px">R$ ${parseFloat(produto.precocusto).toFixed(2)}</td>
+        <td style="font-size: 12px;border:1px solid #ccc;text-align: right;height:30px">R$ ${parseFloat(produto.precovenda).toFixed(2)}</td>        
         <td style="border:1px solid #ccc;height:30px">
           <button class="btnEditar"  data-controle="${produto.controle}">✏️</button>
           <button class="btnExcluir" data-controle="${produto.controle}">🗑️</button>

@@ -103,14 +103,14 @@ function renderizarPaginaCaixa() {
       linha.innerHTML = `
         <td style="font-size: 10px;text-align:center; border:1px solid #ccc; background:#f9f9f9;font-size:12px">
         ${mov.controle}
-        <td style="font-size: 10px;border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.funcionario} </td>
-        <td style="font-size: 10px;border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.cliente.toUpperCase()} </td>
-        <td style="font-size: 10px;border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.fornecedor.toUpperCase()}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.descricao.toUpperCase()}</td>
-        <td style="font-size: 10px;border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.especies.toUpperCase()}</td>
-        <td style="font-size: 10px;text-align:right; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${entrada.toFixed(2)}</td>
-        <td style="font-size: 10px;text-align:right; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${saida.toFixed(2)}</td>
-        <td style="font-size: 10px;text-align:center; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${formatarDataBRL(mov.datacadastro)}</td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.funcionario} </td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.cliente.toUpperCase()} </td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.fornecedor.toUpperCase()}</td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.descricao.toUpperCase()}</td>
+        <td style="border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${mov.especies.toUpperCase()}</td>
+        <td style="text-align:right; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${entrada.toFixed(2)}</td>
+        <td style="text-align:right; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${saida.toFixed(2)}</td>
+        <td style="text-align:center; border:1px solid #ccc;font-size:12px; padding:6px 6px;"> ${formatarDataBRL(mov.datacadastro)}</td>
       `;
       tbody.appendChild(linha);
     });
