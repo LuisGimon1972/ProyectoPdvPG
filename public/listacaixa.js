@@ -136,7 +136,7 @@ function renderizarPaginacaoCaixa() {
   btnAnterior.textContent = 'Anterior';
   btnAnterior.disabled = paginaAtualCaixa === 1;
   Object.assign(btnAnterior.style, {
-    backgroundColor: '#f1ab13',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: '#fff',
     border: 'none',
     padding: '10px 16px',
@@ -160,7 +160,7 @@ function renderizarPaginacaoCaixa() {
   btnProximo.textContent = 'Próxima';
   btnProximo.disabled = paginaAtualCaixa === totalPaginas;
   Object.assign(btnProximo.style, {
-    backgroundColor: '#f1ab13',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: '#fff',
     border: 'none',
     padding: '10px 16px',

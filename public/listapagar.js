@@ -103,7 +103,7 @@ function configurarBotoesExcluirPagar() {
     if (!controle) return;
 
     Object.assign(botao.style, {
-      backgroundColor: '#f1ab13',
+      backgroundColor: 'rgb(8, 8, 233)',
       color: 'white',
       border: 'none',
       padding: '6px 12px',
@@ -141,7 +141,7 @@ function renderizarPaginacaoPagar() {
   btnAnterior.textContent = 'Anterior';
   btnAnterior.disabled = paginaAtualPagar === 1;
   Object.assign(btnAnterior.style, {
-    backgroundColor: '#0867c7ff',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: '#fff',
     border: 'none',
     padding: '10px 16px',
@@ -167,7 +167,7 @@ function renderizarPaginacaoPagar() {
   btnProximo.textContent = 'Próxima';
   btnProximo.disabled = paginaAtualPagar === totalPaginas;
   Object.assign(btnProximo.style, {
-    backgroundColor: '#0867c7ff',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: '#fff',
     border: 'none',
     padding: '10px 16px',

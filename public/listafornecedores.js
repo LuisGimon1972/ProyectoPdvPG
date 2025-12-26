@@ -134,7 +134,7 @@ function criarBotaoPaginacao(texto, desabilitado, onClick) {
   btn.onclick = onClick;
 
   Object.assign(btn.style, {
-    backgroundColor: '#f1ab13',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: '#fff',
     border: 'none',
     padding: '10px 16px',
@@ -155,7 +155,7 @@ function criarBotaoPaginacao(texto, desabilitado, onClick) {
 
 function aplicarEstiloBotao(botao) {
   Object.assign(botao.style, {
-    backgroundColor: '#f1ab13',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: 'white',
     border: 'none',
     padding: '6px 12px',

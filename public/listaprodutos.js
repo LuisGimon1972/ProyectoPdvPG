@@ -72,7 +72,7 @@ function renderizarPaginacaoProdutos() {
   const btnAnterior = document.createElement('button');
   btnAnterior.textContent = 'Anterior';
   btnAnterior.disabled = paginaAtualProdutos === 1; 
-  btnAnterior.style.backgroundColor = '#f1ab13';
+  btnAnterior.style.backgroundColor = 'rgb(8, 8, 233)';
   btnAnterior.style.color = '#fff';
   btnAnterior.style.border = 'none';
   btnAnterior.style.padding = '10px 16px';
@@ -88,7 +88,7 @@ function renderizarPaginacaoProdutos() {
   const btnProximo = document.createElement('button');
   btnProximo.textContent = 'Próxima';
   btnProximo.disabled = paginaAtualProdutos === totalPaginas;
-  btnProximo.style.backgroundColor = '#f1ab13';  
+  btnProximo.style.backgroundColor = 'rgb(8, 8, 233)';  
   btnProximo.style.border = 'none';
   btnProximo.style.padding = '10px 16px';
   btnProximo.style.borderTopRightRadius = '20px';
@@ -110,7 +110,7 @@ function renderizarPaginacaoProdutos() {
 
 function configurarBotoesProduto() {
   const estiloBotao = {
-    backgroundColor: '#f1ab13',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: 'white',
     border: 'none',
     padding: '6px 12px',

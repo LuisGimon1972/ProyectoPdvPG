@@ -161,7 +161,7 @@ function configurarBotoesExcluirReceberC() {
     const controle = botao.getAttribute('data-controle');
     if (!controle) return;
     Object.assign(botao.style, {
-      backgroundColor: '#f1ab13',
+      backgroundColor: 'rgb(8, 8, 233)',
       color: 'white',
       border: 'none',
       padding: '6px 12px',
@@ -196,7 +196,7 @@ function renderizarControlesPaginacao() {
     btn.textContent = i;
     btn.style = `
       margin: 0 4px; padding: 6px 12px;
-      ${i === paginaAtualParcelas ? 'font-weight: bold; background-color: #f1ab13; color: white;' : ''}
+      ${i === paginaAtualParcelas ? 'font-weight: bold; background-color: rgb(8, 8, 233); color: white;' : ''}
     `;
     btn.onclick = () => {
       paginaAtualParcelas = i;
@@ -424,12 +424,10 @@ async function salvarLancamentosCaixaReceber() {
   const funcionario = funcionarioSelecionadoR;
   const cod_cliente = controleSeleCliente || 1;
   const cliente = nomeclienSele;
-  const descricao = 'Recebimento Parcelas';
-  const agora = new Date();
-  const ano = agora.getFullYear();
-  const mes = String(agora.getMonth() + 1).padStart(2, '0'); 
-  const dia = String(agora.getDate()).padStart(2, '0');
-  const datacadastro = `${ano}-${mes}-${dia}`;  
+  const descricao = 'Recebimento Parcelas';  
+  const datacadastro = new Date().toLocaleDateString('sv-SE', {
+  timeZone: 'America/Sao_Paulo'
+  });  
   const valorDinheiro = arredondar(totalGeral)
   const debitoInput = parseFloat(document.getElementById('cartaoDebito').value) || 0;
   const creditoInput = parseFloat(document.getElementById('cartaoCredito').value) || 0;

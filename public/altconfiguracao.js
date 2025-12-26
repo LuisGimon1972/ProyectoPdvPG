@@ -2,7 +2,7 @@ function configura() {
   limparNome();       
   document.getElementById('formPresenta').style.display = 'none';   
   document.getElementById('formConfig').style.display = 'block';  
-  document.getElementById('formPainel').style.display = 'block';            
+  document.getElementById('formPainel').style.display = 'none';            
   carregarTipos(1)  
 }
 

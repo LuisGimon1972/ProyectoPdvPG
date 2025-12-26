@@ -108,7 +108,7 @@ function configurarBotoesExcluirReceber() {
     if (!controle) return;
 
     Object.assign(botao.style, {
-      backgroundColor: '#f1ab13',
+      backgroundColor: 'rgb(8, 8, 233)',
       color: 'white',
       border: 'none',
       padding: '6px 12px',
@@ -145,7 +145,7 @@ function renderizarPaginacao() {
   const btnAnterior = document.createElement('button');
   btnAnterior.textContent = 'Anterior';
   btnAnterior.disabled = paginaAtual === 1;
-  btnAnterior.style.backgroundColor = '#f1ab13';
+  btnAnterior.style.backgroundColor = 'rgb(8, 8, 233)';
   btnAnterior.style.color = '#fff';
   btnAnterior.style.border = 'none';
   btnAnterior.style.padding = '10px 16px';
@@ -168,7 +168,7 @@ function renderizarPaginacao() {
   const btnProximo = document.createElement('button');
   btnProximo.textContent = 'Próxima';
   btnProximo.disabled = paginaAtual === totalPaginas;
-  btnProximo.style.backgroundColor = '#f1ab13';
+  btnProximo.style.backgroundColor = 'rgb(8, 8, 233)';
   btnProximo.style.color = '#fff';
   btnProximo.style.border = 'none';
   btnProximo.style.padding = '10px 16px';

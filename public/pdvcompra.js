@@ -455,6 +455,10 @@ function finalizarCompra() {
     salvarParcelasPagar();
   }
 
+  let compraImpressa = false
+  if (compraImpressa) return
+  else{
+  compraImpressa = true
   imprimirCompra({
     usuario: usuariologadoF,
     fornecedor: nomeFornecedorSel,
@@ -462,6 +466,7 @@ function finalizarCompra() {
     tipoCredito: tipoCreditoTexto,
     parcelas: listaParcelas
   });
+  }  
 
   limparCompra();
   setTimeout(() => location.reload(), 2000);

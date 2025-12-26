@@ -5,7 +5,7 @@ const itensPorPaginaClientes = 12;
 
 function aplicarEstiloBotao(botao) {
   Object.assign(botao.style, {
-    backgroundColor: '#1476dfff',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: 'white',
     border: 'none',
     padding: '6px 12px',
@@ -22,7 +22,7 @@ function criarBotaoPaginacao(texto, desabilitado, onClick) {
   btn.onclick = onClick;
 
   Object.assign(btn.style, {
-    backgroundColor: '#0867c7ff',
+    backgroundColor: 'rgb(8, 8, 233)',
     color: '#fff',
     border: 'none',
     padding: '10px 16px',

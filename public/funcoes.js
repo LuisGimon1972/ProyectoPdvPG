@@ -429,7 +429,7 @@ function limparNome() {
   }
   
   function estilizarBotao(botao, onClickHandler) {
-    botao.style.backgroundColor = ' #f1ab13';
+    botao.style.backgroundColor = 'rgb(8, 8, 233)';
     botao.style.color = 'white';
     botao.style.padding = '10px 20px';
     botao.style.border = 'none';

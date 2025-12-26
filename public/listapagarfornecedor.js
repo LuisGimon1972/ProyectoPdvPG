@@ -143,7 +143,7 @@ function configurarBotoesExcluirPagarF() {
     if (!controle) return;
 
     Object.assign(botao.style, {
-      backgroundColor: '#f1ab13',
+      backgroundColor: 'rgb(8, 8, 233)',
       color: 'white',
       border: 'none',
       padding: '6px 12px',
@@ -211,7 +211,7 @@ function renderizarControlesPaginacaoF() {
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      background-color: ${i === paginaAtualParcelasF ? '#f1ab13' : '#e0e0e0'};
+      background-color: ${i === paginaAtualParcelasF ? 'rgb(8, 8, 233)' : '#e0e0e0'};
       color: ${i === paginaAtualParcelasF ? 'white' : 'black'};
     `;
     btn.onclick = () => {
@@ -387,7 +387,9 @@ async function salvarLancamentosCaixaPagar() {
   const cod_fornecedor = controleFornecedorSelecionadoP || 1;
   const fornecedor = nomeFornecedorSelecionadoP;
   const descricaoBase = 'Pagamento de Parcelas';
-  const datacadastro = new Date().toISOString().slice(0, 10);
+  const datacadastro = new Date().toLocaleDateString('sv-SE', {
+  timeZone: 'America/Sao_Paulo'
+  });
   const valorDinheiro1 = arredondarF(totalGeral)
   const debitoInput = parseFloat(document.getElementById('cartaoDebito').value) || 0;
   const dinInput = parseFloat(document.getElementById('dinheiro').value) || 0;  
